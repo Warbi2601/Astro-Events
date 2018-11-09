@@ -1,0 +1,120 @@
+body {
+    font-family: 'Century Gothic', Helvetica, Arial, sans-serif;
+    padding: 0px;
+    margin: 0px;
+    color: black;
+    /* font-size: 1.4rem; */
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+}
+
+.headBar {
+    padding: 20px;
+    display: flex;
+}
+
+.flexItem1 {
+    flex-basis: 15%;
+}
+
+.flexItem2 {
+    flex-basis: 70%;
+}
+
+.flexItem3 {
+    flex-basis: 15%;
+}
+
+nav {
+    display: block;
+}
+
+nav ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+span.burgerMenu {
+    font-size: 35px;
+    float: right;
+    color: #d8670d;
+}
+
+span.loginBtn {
+    font-size: 1.5rem;
+    float: left;
+    color: #d8670d;
+    border-radius: 45px;
+    background-color: #272727;
+    padding: 8px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #272727;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 25px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 8px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav nav ul:nth-child(1) {
+    padding-top: 20px;
+}
+
+.pageCheck {
+    background-color: #d8670d;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: #d8670d;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.websiteTitle {
+    margin: 0px;
+    font-size: 1.8rem;
+}
+
+.requiredField {
+    color: red;
+}
+
+.requiredFieldBtn {
+    color: #fcfcfc;
+}
+
+.inputBox {
+	flex-basis: 100%;
+	display: flex;
+	margin: 11px 0px;
+}
