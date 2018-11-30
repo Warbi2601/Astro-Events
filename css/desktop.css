@@ -1,0 +1,161 @@
+.burgerMenu, .mobH1{
+	display:none;
+}
+header nav ul li h1{
+	display:block;
+	padding:0;
+	margin:5px;
+	font-size:1.2rem;
+	color: #DDEAF2;
+}
+
+.headBarContainer {
+    background-image: url(../Images/SpaceHeaderDesktop.png);
+	background-repeat: no-repeat;
+	height:215px;
+}
+
+footer {
+    background-image: url(../Images/SpaceHeaderDesktop.png);
+	background-repeat: no-repeat;
+	height:130px;
+}
+
+.transparentNav {
+	background: transparent;
+}
+
+nav {
+    display: block;
+    background-color: #111;
+}
+
+nav ul {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	margin: 0px;
+}
+
+.searchItem {
+	order: 0;
+}
+
+nav ul li {
+	border: none;
+	padding: 5px;
+	list-style: none;
+}
+
+.sidenav a {
+	border: none;
+	padding: 5px 10px;
+	transition: 0.7s;
+    border-bottom: 3px solid rgba(0, 0, 0, 0);	
+    width: auto;
+}
+
+/* #mySidenav a:hover {
+    border-bottom: 3px solid #d8670d;
+} */
+
+.slideHover::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 3px;
+    background: #660066;
+	transition: width .5s;
+	position: relative;
+	bottom: -4px;
+}
+
+.slideHover:hover::after {
+	width: 100%;
+}
+
+.pageCheck{
+	text-decoration: none;
+	position: relative;
+	background-color: transparent;
+}
+
+ .pageCheck::after {
+	content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #660066;
+	position: relative;
+	bottom: -4px;
+} 
+
+nav ul li:first-child {
+	display: none;
+}
+
+.grid {
+	padding: 5px;
+	width: 25%;
+}
+
+.content {
+	display: flex;
+	box-sizing: border-box;
+}
+
+#mySidenav {
+	display: block;
+}
+
+.flexItem2 {
+	flex-basis: 70%;
+	margin-bottom: 30px;
+}
+
+.flexItem3 {
+	flex-basis: calc(70% + 40px);
+	margin:auto;
+}
+
+.sidenav {
+	height: auto;
+	width: auto;
+	position: static;
+	background-color: transparent;
+	padding: 0px;
+}
+
+.form {
+	width: 50%;
+    margin: auto;
+}
+
+.userColor {
+    color: white;
+	font-size: 4.0rem;
+	top: 15px;
+}
+
+.dropdown-menu {
+    top: 145%;
+}
+
+.websiteTitle {
+	flex-basis: 100%;
+	font-size: 4.5rem;
+}
+
+.websiteSubtitle {
+	flex-basis: 100%;
+	font-size: 1.3rem;
+}
+
+
+
+/* Modal CSS */
+
+#modal-container .modal-background .modal {
+	width: 50%;
+	max-height: 80%;
+}

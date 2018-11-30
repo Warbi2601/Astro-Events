@@ -55,7 +55,7 @@ $stmt->bindParam(':Username', $sUsername, PDO::PARAM_STR);
 $stmt->bindParam(':Email', $sEmail, PDO::PARAM_STR); 
 $stmt->execute(); 
 
-if($stmt->rowCount() == 1)
+if($stmt->rowCount() > 0)
 //Matching details in DB
 {  
     $row = $stmt->fetchobject();

@@ -10,8 +10,6 @@ $sUsername = safeString($_POST['username']);
 $sPassword = safeString($_POST['password']);
 $currentDate = date("Y-m-d H:i:s");
 
-$_SESSION['loginError'] = 1;
-$referer = "login.php";
 
 //login code
 
@@ -32,13 +30,6 @@ if($stmt->rowcount() != 0)
         }
         else 
         {
-
-            //Logs in and creates user object (before the Last Login Date is updated)
-            $User = new User($row->ID, $pdo);
-
-            //Save the user object into the session variable
-            $_SESSION['User'] = $User;
-
             //Update last login date
             $sql = "UPDATE Users SET LastLoginDate = :currentDate WHERE Username = :Username";
             $stmt = $pdo->prepare($sql);
@@ -48,6 +39,17 @@ if($stmt->rowcount() != 0)
 
             unset($_SESSION['loginError']);
             $_SESSION['login'] = true;
+
+            //Logs in and starts user session
+            
+            
+            //@$User = new User($row->ID, $pdo);
+
+            //Save the user object into the session variable
+            
+            
+            //@$_SESSION['User'] = $User;
+            
             
             $referer = "index.php";
         }

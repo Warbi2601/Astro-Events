@@ -1,4 +1,5 @@
 <?php
+require("includes/user.inc.php");
 require("includes/sessions.inc.php");
 require("includes/authorize.inc.php");
 ?>
@@ -9,60 +10,150 @@ require("includes/authorize.inc.php");
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Events Website</title>
+    <title>Astro Events</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="css/mobile.css" />
     <link rel="stylesheet" media="only screen and (min-width : 600px)" href="css/desktop.css">
 </head>
 
 <body>
-    <div class="container">
+    <header>
+    <div class="headBarContainer">
         <div class="headBar">
 
             <div class="flexItem1">
-                <a href="login.php"><span class="loginBtn">Login</span></a>
+            <?php
+            //logic for populating the "My Account" dropdown depending on whether the user is logged in or not
+                if(isset($_SESSION['login'])){
+                    echo '
+                        <div class="dropdown">
+                            <a class="fas fa-user-astronaut dropdown-toggle userColor" href="#" role="button" id="dropdownMenuLink" 
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="cms/process/logoutscript.php">Logout</a></li>
+                                <li><a href="#">My Account</a></li>';
+
+                    //logic for showing the admin button to admins only
+                    $User = $_SESSION['User'];
+                    $UserAdmin = $User->getAdmin();
+
+                    if($UserAdmin == 1)
+                    {
+                        echo '
+                                <li class="divider"></li>
+                                <li><a href="admin.php">Admin</a></li>
+                        ';
+                    }
+                    
+                    echo '
+                            </ul>
+                        </div>
+                        ';
+                }
+                else {
+                    echo '
+                        <div class="dropdown">
+                            <a class="fas fa-user-astronaut dropdown-toggle userColor" href="#" role="button" id="dropdownMenuLink" 
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="login.php">Login</a></li>
+                                <li class="divider"></li>
+                                <li><a href="createaccount.php">Create Account</a></li>
+                            </ul>
+                        </div>
+                        ';
+                }
+            ?>
             </div>
 
             <div class="flexItem2">
-                <h1 class="websiteTitle">Events Website</h1>
+                <h1 class="websiteTitle">Astro Events</h1>
+                <p class="websiteSubtitle">Events that are out of this world</p>
             </div>
 
             <div class="flexItem3">
                 <span class="burgerMenu" onclick="openNav()">&#9776;</span>
                 <div id="mySidenav" class="sidenav">
-                    <nav>
+                    <nav class="transparentNav">
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
-                            <li><a href="index.html" class="pageCheck">About Me</a></li>
-                            <li><a href="Qualifications.html" class="slideHover">Qualifications</a></li>
-                            <li><a href="WorkExperience.html" class="slideHover">Work Experience</a></li>
-                            <li><a href="Recommendations.html" class="slideHover">Recommendations</a></li>
-                            <li><a href="PreviousProjects.html" class="slideHover">Previous Projects</a></li>
-                            <li><a href="CV.html" class="slideHover">CV</a></li>
-                            <li><a href="ContactMe.php" class="slideHover">Contact Me</a></li>
+                            <li><a href="index.php" class="pageCheck">Home</a></li>
+                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
+                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
+                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
+</header>
 
-        <div>
-            <?php
-        if(isset($_SESSION['login']))
-        {
-            echo "successful login!";
-        }
+    <div>
+        <?php
+            if(isset($_SESSION['login'])) {
+                
+                echo "<p>successful login!</p>";
+
+                if(isset($_SESSION['User'])) {
+
+                    //logic for showing the welcome message with the users username and date last logged in
+                    $User = $_SESSION['User'];
+                    $UserUsername = $User->getUsername();
+                    $UserLastLoginDate = $User->getLastLoginDate();
+
+                    $displayDate = new DateTime($UserLastLoginDate);
+
+                    $displayDate = $displayDate->format('D jS M Y');
+
+                    echo "<p>Welcome Back $UserUsername! You last logged in on $displayDate</p>";
+                }
+            }
+            else {
+                header("Location: Login.php");
+            }
+
         ?>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
-            <a href="cms/process/logoutscript.php"><span class="loginBtn">Logout</span></a>
+    </div>
 
 
-        </div>
 
-        <script src="JS/jquery-3.2.1.min.js">
-        </script>
-        <script src="JS/jquery.js">
-        </script>
+    <footer>
+        <p class="lastUpdated">Page Last Updated: </p>
+        <p>Copyright &copy; Josh Warburton 2018</p>
+        <!-- <div class="footerlogo">
+            <a href="https://www.linkedin.com/in/joshwarburton/"><img src="Images/LinkedIn.png" alt="" width="40"
+                    height="40">
+                <a href="https://github.com/Warbi2601"><img src="Images/GitHub.png" alt="" width="40" height="40"></a>
+        </div> -->
+    </footer>
+
+    <script src="JS/jquery-3.2.1.min.js"></script>
+    <script src="JS/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 
 </html>

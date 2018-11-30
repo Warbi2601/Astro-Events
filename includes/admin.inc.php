@@ -3,25 +3,15 @@
 include("../../includes/sessions.inc.php");
 include("../../includes/conn.inc.php");
 include("../../includes/functions.inc.php");
-require("../../includes/user.inc.php");
-
-//variable declarations
-$sUsername = safeString($_POST['username']);
-$sPassword = safeString($_POST['password']);
-$currentDate = date("Y-m-d H:i:s");
 
 $_SESSION['loginError'] = 1;
-$referer = "login.php";
 
-//login code
-
-$sql = "SELECT ID, Username, PasswordHash, EmailValidated FROM Users WHERE Username = :Username";
+$sql = "SELECT Admin FROM Users WHERE Username = ";
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindParam(':Username', $sUsername, PDO::PARAM_STR);
 $stmt->execute();
 
-if($stmt->rowcount() != 0)
+if($stmt->Admin == 1)
 {
     $row = $stmt->fetchObject();
     if(password_verify($sPassword, $row->PasswordHash))
@@ -32,23 +22,16 @@ if($stmt->rowcount() != 0)
         }
         else 
         {
-
-            //Logs in and creates user object (before the Last Login Date is updated)
-            $User = new User($row->ID, $pdo);
-
-            //Save the user object into the session variable
-            $_SESSION['User'] = $User;
-
             //Update last login date
             $sql = "UPDATE Users SET LastLoginDate = :currentDate WHERE Username = :Username";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':Username', $sUsername, PDO::PARAM_STR);
             $stmt->bindParam(':currentDate', $currentDate, PDO::PARAM_STR);
             $stmt->execute();
-
+            
+            //Logs in and starts user session
             unset($_SESSION['loginError']);
             $_SESSION['login'] = true;
-            
             $referer = "index.php";
         }
     }

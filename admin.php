@@ -1,5 +1,6 @@
 <?php
 require("includes/sessions.inc.php");
+require("includes/authorize.inc.php");
 ?>
 
 <!doctype <!DOCTYPE html>
@@ -76,94 +77,88 @@ require("includes/sessions.inc.php");
 </header>
 
 
-                <div class="whiteBackground">
+        <div class="whiteBackground">
+            <div class="text">
+        
+                <h1>Admin</h1>
+                <div id="modal-container">
+                    <div class="modal-background">
+                        <div class="modal">
 
-                <div class="text">
+                            <!-- Content created here dynamically using jQuery -->
 
-        <h1>Create Account</h1>
-
-        <div class="form">
-        <form action="cms/process/createaccountscript.php" method="POST">
-
-            <div class="inputBox">
-                <span class="requiredField">*</span>
-                <input type="email" name="email" id="email" placeholder="Email" required>
-                <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="buttons">
+                        <div id="addEvent" class="button">Add Event</div>
+                        <div id="editEvent" class="button">Edit Event</div>
+                    </div>
+                </div>
             </div>
-
-            <div class="inputBox">
-                <span class="requiredField">*</span>
-                <input type="text" name="username" id="username" placeholder="Username" required>
-                <br />
-            </div>
-
-            <div class="inputBox">
-                <span class="requiredField">*</span>
-                <input type="password" name="password" id="password" placeholder="Password" required>
-                <br />
-            </div>
-
-            <div class="inputBox">
-                <span class="requiredField">*</span>
-                <input type="password" name="passwordRepeat" id="passwordRepeat" placeholder="Repeat your password" required>
-                <br />
-            </div>
-
-            <div class="inputBox">
-                <span class="requiredFieldBtn">*</span>
-                <input type="submit" value="Create Account" class="btnStandard">
-                <br />
-            </div>
-
-        </form>
         </div>
 
-        <div class="createAccountLink">
-            <p>Already got an account with us? <a href="login.php">Login here!</a></p>
-        </div>
+    <footer>
+        <p class="lastUpdated">Page Last Updated: </p>
+        <p>Copyright &copy; Josh Warburton 2018</p>
+        <!-- <div class="footerlogo">
+            <a href="https://www.linkedin.com/in/joshwarburton/"><img src="Images/LinkedIn.png" alt="" width="40"
+                    height="40">
+                <a href="https://github.com/Warbi2601"><img src="Images/GitHub.png" alt="" width="40" height="40"></a>
+        </div> -->
+    </footer>
 
-        <?php
+    <script src="JS/jquery-3.2.1.min.js"></script>
+    <script src="JS/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-if(isset($_SESSION['regError']))
-{  
-    switch($_SESSION['regError'])
-    {   
-        case 1 :   
-            echo "<p class=\"error\">Invalid Email Address</p>";
-            break;
-        case 2 :   
-            echo "<p class=\"error\">Password fields did not match</p>";
-            break;
-        case 3 :   
-            echo "<p class=\"error\">Email already Registered</p>";
-            break;  
-        case 4 :   
-            echo "<p class=\"error\">Username already in use</p>";
-            break;  
-        case 5 :   
-            echo "<p class=\"error\">You need to fill in all required fields to create an account</p>";
-            break;  
-    } 
-} 
-    unset($_SESSION['regError']);
+    <!-- GREAT EXAMPLE OF USING A PHP VARIABLE IN JS -->
+
+    <!-- <script type="text/javascript">
+
+        $(document).ready(function() {
+            debugger;
+            
+            ?php
+    $_SESSION['test'] = array(
+        0 => "Mon", 
+        1 => "Tue", 
+        2 => "Wed", 
+        3 => "Thu",
+        4 => "Fri", 
+        5 => "Sat",
+        6 => "Sun",
+    )
 ?>
 
-</div>
-</div>
 
-        <footer>
-            <p class="lastUpdated">Page Last Updated: </p>
-            <p>Copyright &copy; Josh Warburton 2018</p>
-            <!-- <div class="footerlogo">
-                <a href="https://www.linkedin.com/in/joshwarburton/"><img src="Images/LinkedIn.png" alt="" width="40"
-                        height="40">
-                    <a href="https://github.com/Warbi2601"><img src="Images/GitHub.png" alt="" width="40" height="40"></a>
-            </div> -->
-        </footer>
+        var jArray = ?php echo json_encode($_SESSION['test']); ?>;
 
-        <script src="JS/jquery-3.2.1.min.js"></script>
-        <script src="JS/jquery.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        for(var i=0; i<jArray.length; i++){
+            alert(jArray[i]);
+        }
+    });
+
+    </script> -->
+
+<!-- GREAT EXAMPLE OF AN AJAX CALL TO GET DATA FROM JS TO PHP (See "test.inc.php") FOR SERVER SIDE CODE -->
+
+    <!-- <script>
+
+        $(document).ready(function() {
+
+            $.ajax({
+                type: "POST",
+                url: 'includes/test.inc.php',
+                data: { userID : 4 },
+                success: function(data)
+                {
+                    alert("success!");
+                }
+            });
+        });
+        </script> -->
 </body>
 
 </html>
