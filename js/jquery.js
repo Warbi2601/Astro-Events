@@ -55,31 +55,52 @@ $(document).ready(function() {
 
 
 
-
-
+function childOf( node, ancestor ) {
+    var child = node;
+    while (child !== null) {
+		if (child === ancestor) return true;
+		try {
+			if (child.id === ancestor.id) return true;
+		}
+		catch(e) {
+			console.log("Gimme more marks Martin pls");
+		}
+        child = child.parentNode;
+    }
+    return false;   
+}
 
 // code for opening and closing modals
-
 window.onclick = function(event) {
 
-	var modal = document.getElementsByClassName('modal');
-	var button = $('.button');
-	if($('body').hasClass('modal-active')) {
+	//add ID's to be used later;
+	$('.ui-datepicker-buttonpane').attr("id","datepickerBtn");
+	$('.ui-datepicker-header').attr("id","datepickerHeader");
 
-		if($(event.target).parents('.modal').length == 0 && $(event.target).hasClass('modal') == false) {
-			removeModal();
+	var modal = $('#modal').get(0);
+	var button = $('.button');
+	var datepicker = $('#ui-datepicker-div').get(0);
+	var btnPane = $('#datepickerBtn').get(0);
+	var dpHeader = $('#datepickerHeader').get(0);
+
+	if($('body').hasClass('modal-active')) {
+		if (modal !== event.target && !childOf(event.target, modal) && datepicker !== event.target 
+			&& !childOf(event.target, datepicker) && btnPane !== event.target && !childOf(event.target, btnPane) 
+			&& dpHeader !== event.target && !childOf(event.target, dpHeader)) {  
+				removeModal();
 		}
 	}
 	else if(event.target.className == 'button')
 	{
-		$('#modal-container').removeAttr('class').addClass('modalBtn');
-		$('body').addClass('modal-active');
+		showModal();
 	}
 }
 
-$('body').on("click", "span", function(ev) {
-	removeModal();
-})
+function addCloseClickEvent() {
+	$('#close').on("click", function(ev) {
+		removeModal();
+	});
+}
 
 function removeModal() {
 	$('#modal-container').addClass('out');
@@ -88,99 +109,14 @@ function removeModal() {
 	setTimeout(deleteModalData, 200);
 }
 
+function showModal() {
+	$('#modal-container').removeAttr('class').addClass('modalBtn');
+	$('body').addClass('modal-active');
+}
+
 function deleteModalData() {
 	$('.modalToDelete').remove();
 }
-
-// code for building dynamic modals
-
-$('.button').on("click", function(ev) {
-	var BtnID = event.target.id;
-
-	switch(BtnID)
-	{
-		//Add Event
-		case 'addEvent' :
-		//Header
-		$('.modal').append('<div class="modalToDelete"></div>');
-		$('.modalToDelete').append('<div class="modalForm"></div>');
-		$('.modalForm').append('<form action="cms/process/loginscript.php" method="POST" id="addEventForm"></form>');
-		$('#addEventForm').append('<div class="modal-header"></div>');
-		$('.modal-header').append('<span class="close">&times;</span>');
-		$('.modal-header').append('<h2>Add Event</h2>');
-
-		//Body
-		$('#addEventForm').append('<div class="modal-body"></div>');
-
-		$('.modal-body').append('<div class="inputBox"></div>');
-		$('.inputBox:nth-child(1)').append('<span class="requiredField">*</span>');
-		$('.inputBox:nth-child(1)').append('<input type="text" name="name" id="name" placeholder="Event Name" required>');
-		$('.inputBox:nth-child(1)').append('<br />');
-
-		$('.modal-body').append('<div class="inputBox"></div>');
-		$('.inputBox:nth-child(2)').append('<span class="requiredField">*</span>');
-		$('.inputBox:nth-child(2)').append('<input type="text" name="details" id="details" placeholder="Event Details" required>');
-		$('.inputBox:nth-child(2)').append('<br />');
-
-		$('.modal-body').append('<div class="inputBox"></div>');
-		$('.inputBox:nth-child(3)').append('<span class="requiredField">*</span>');
-
-		//@EXAMPLE OF DROPDOWN MENUS
-
-		var selectList = '<select class="form-control" name="artist" id="artist" required>';
-
-		var arrayFromPHP = ["Saab", "Volvo", "BMW"];
-		addToDropDownList(arrayFromPHP, ".inputBox:nth-child(3)", selectList);
-
-		$('.inputBox:nth-child(3)').append('<br />');
-
-		//Footer
-		$('#addEventForm').append('<div class="modal-footer"></div>');
-		$('.modal-footer').append('<div class="inputBox" id="footer"></div>');
-		$('#footer').append('<input type="submit" value="Add Event" class="btnStandard" required>');
-		$('#footer').append('<br />');
-		break;
-
-		//Edit Event
-		case 'editEvent' :
-		//Header
-		$('.modal').append('<div class="modalToDelete"></div>');
-		$('.modalToDelete').append('<div class="modal-header"></div>');
-		$('.modal-header').append('<span class="close">&times;</span>');
-		$('.modal-header').append('<h2>Edit Event</h2>');
-
-		//Body
-		$('.modalToDelete').append('<div class="modal-body"></div>');
-		$('.modal-body').append('<div class="form"></div>');
-		$('.modal-body').append('<form action="cms/process/loginscript.php" method="POST"></form>');
-		
-		$('.modal-body').append('<div class="inputBox"></div>');
-		$('.modal-body').append('<span class="requiredField">*</span>');
-		$('.modal-body').append('<input type="text" name="name" id="name" placeholder="Event Name" required>');
-		$('.modal-body').append('<br />');
-
-		$('.modal-body').append('<div class="inputBox"></div>');
-		$('.modal-body').append('<span class="requiredField">*</span>');
-		$('.modal-body').append('<input type="text" name="details" id="details" placeholder="Event Details" required>');
-		$('.modal-body').append('<br />');
-
-		//Footer
-		$('.modalToDelete').append('<div class="modal-footer"></div>');
-		$('.modal-footer').append('<div class="inputBox"></div>');
-		$('.modal-footer').append('<input type="submit" value="Add Event" class="btnStandard" required>');
-		$('.modal-footer').append('<br />');
-		break;
-	}
-
-	var height = window.innerHeight * 0.65;
-	var footerheight = $('.modal-footer').height();
-	var headheight = $('.modal-header').height();
-	var content = $('.modal-body');
-
-	var step1 = (height - headheight);
-	var availableheight = (step1 - footerheight);
-	$('.modal-body').css({"height" : availableheight, "overflow" : "auto"});
-})
 
 $(window).resize(function() {
 	if($('body').hasClass('modal-active')) {
@@ -195,12 +131,189 @@ $(window).resize(function() {
 	}
 });
 
-function addToDropDownList(array, parent, htmla) {
-	debugger;
-	for (var x = 0; x < array.length; x++) {
-		htmla += "<option>" + array[x] + "</option>";
-	}
-	htmla += "</select>";
+function addToDropDownList(array, parent, htmla, id) {
+	$.each(array, function(key, value) {
+		switch(id)
+		{
+			case 'genre' :
+				htmla += "<option value=\"" + value.genreID + "\">" + value.genreName + "</option>";
+				break;
+			case 'artist' :
+				htmla += "<option value=\"" + value.artistID + "\">" + value.artistName + "</option>";
+				break;
+			case 'venue' :
+				htmla += "<option value=\"" + value.venueID + "\">" + value.venueName + ", " + value.venueLocation + "</option>";
+				break;
+		}
+	});
 
+	htmla += "</select>";
 	$(parent).append(htmla);
+}
+
+function getDropdownData(url, parent, id) {
+	$.get(url, function(myData) {
+		var arr = $.map(myData, function(el) { return el; })
+		addToDropDownList(arr, parent, '<select class="form-control" name="' + id + '" id="' + id + '" required>', id)
+	});
+}
+
+function getPopulatedDropdownData(url, parent, id, selectedID) {
+	$.get(url, function(myData) {
+		var arr = $.map(myData, function(el) { return el; });
+		addToDropDownList(arr, parent, '<select class="form-control" name="' + id + '" id="' + id + '" required>', id);
+		$("#" + id).val(selectedID);
+	});
+}
+
+$('.buyTickets').on('click', function(ev) {
+	ev.preventDefault();
+	// Extra client side validation to stop people buying tickets for events that are sold out
+	if($(this).attr('soldOut') != 'true') {
+		var showID = $(this).attr('id');
+		var ticketsAvailable = $(this).attr('numOfTickets');
+		var ticketPrice = $(this).attr('ticketPrice');
+		var lblTicketsAvailable = "There are " + parseFloat(ticketsAvailable).toFixed(0) + " tickets left for this show!"
+	
+		$.ajax({
+			type: "POST",
+			url: "/events-website/includes/buyTickets.inc.html",
+			success: function(data) {
+				$('#ModalContent').html(data);
+				$('#lblNumOfTickets').text(lblTicketsAvailable);
+				$('#showID').val(showID);
+				$('#numofTicketsLeft').val(ticketsAvailable);
+				$('#ticketPrice').val(ticketPrice);
+				addCloseClickEvent();
+				showModal();
+			},
+			error: function() {
+				alert("Modal data failed to load");
+			}
+		});
+	}
+});
+
+$('#addArtist').on('click', function(ev) {
+	ev.preventDefault();
+		$.post('/events-website/includes/addartist.inc.html', function (data) {
+			$('#ModalContent').html(data);
+			addCloseClickEvent();
+			showModal();
+	});
+});
+
+$('#addGenre').on('click', function(ev) {
+	ev.preventDefault();
+		$.post('/events-website/includes/addgenre.inc.html', function (data) {
+			$('#ModalContent').html(data);
+			addCloseClickEvent();
+			showModal();
+	});
+});
+
+$('#addVenue').on('click', function(ev) {
+	ev.preventDefault();
+		$.post('/events-website/includes/addvenue.inc.html', function (data) {
+			$('#ModalContent').html(data);
+			addCloseClickEvent();
+			showModal();
+	});
+});
+
+$('#addEvent').on('click', function(ev) {
+	ev.preventDefault();
+	$.ajax({
+		type: "POST",
+		url: "/events-website/includes/addevent.inc.html",
+		success: function(data) {
+			debugger;
+			$('#ModalContent').html(data);
+			getDropdownData('cms/db-get/getgenre.php', "#genreDropdown", "genre");
+			getDropdownData('cms/db-get/getartist.php', "#artistDropdown", "artist");
+			addCloseClickEvent();
+			showModal();
+		},
+		error: function() {
+			alert("Modal data failed to load");
+		}
+	});
+});
+
+$('#editEvent').on('click', function(ev) {
+	ev.preventDefault();
+	var eventID = $(this).attr('eventID');
+	var genreID = 0;
+	var artistID = 0;
+
+	$.post('cms/db-get/getevent.php', { id: eventID },
+		function (data) {
+			var name = data.Name;
+			var details = data.Details;
+			artistID = data.ArtistID;
+			genreID = data.GenreID;
+
+			$.post('/events-website/includes/editevent.inc.html', function (data) {
+				$('#ModalContent').html(data);
+				getPopulatedDropdownData('cms/db-get/getgenre.php', "#genreDropdown", "genre", genreID);
+				getPopulatedDropdownData('cms/db-get/getartist.php', "#artistDropdown", "artist", artistID);
+				$('#name').val(name);
+				$('#details').val(details);
+				$('#eventID').val(eventID);
+				addCloseClickEvent();
+				showModal();
+		});
+	});
+});
+
+$('#addShow').on('click', function(ev) {
+	ev.preventDefault();
+	var eventID = $(this).attr('eventID');
+
+	$.ajax({
+		type: "POST",
+		url: "/events-website/includes/addshow.inc.html",
+		success: function(data) {
+			$('#ModalContent').html(data);
+			getDropdownData('cms/db-get/getvenue.php', "#venueDropdown", "venue");
+			$('#dp').datetimepicker({
+				controlType: 'select',
+				oneLine: true,
+				timeFormat: 'hh:mm tt'
+			});
+			$('#eventID').val(eventID);
+			addCloseClickEvent();
+			showModal();
+		},
+		error: function() {
+			alert("Modal data failed to load");
+		}
+	});
+});
+
+
+
+
+
+//functionality for showing the sticky navbar
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if ($(document).width() > 600 && (document.body.scrollTop > 215 || document.documentElement.scrollTop > 215)) {
+	$("#stickyBar").show(200);
+  } else {
+	$("#stickyBar").hide(300);
+  }
+}
+
+//maybe use?
+function addDynamicModalStyling() {
+	var height = window.innerHeight * 0.65;
+	var footerheight = $('.modal-footer').height();
+	var headheight = $('.modal-header').height();
+	var content = $('.modal-body');
+
+	var step1 = (height - headheight);
+	var availableheight = (step1 - footerheight);
+	$('.modal-body').css({"height" : availableheight, "overflow" : "auto"});
 }

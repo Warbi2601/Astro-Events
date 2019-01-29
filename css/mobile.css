@@ -5,6 +5,9 @@ body {
     color: black;
     /* font-size: 1.4rem; */
     box-sizing: border-box;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -120,6 +123,14 @@ span.burgerMenu {
   .sidenav a {font-size: 18px;}
 }
 
+.contentWrapper {
+    flex: 1;
+}
+
+#stickyBar {
+    display: none;
+}
+
 .userColor {
     color: white;
     font-size: 3.0rem;
@@ -129,6 +140,10 @@ span.burgerMenu {
 
 .dropdown-menu {
     top: 133%;
+}
+
+.pageWrapper {
+    margin: 15px 15px 15px 15px;
 }
 
 .websiteTitle {
@@ -165,8 +180,214 @@ span.burgerMenu {
     border-color: #d6e9c6;
 }
 
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.flex-item {
+    flex-basis: 100%;
+    background-color: #660066;
+    border-radius: 10px;    
+    padding: 20px;
+    margin: 20px;
+}
+
+.eventImg {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.flex-item:hover {
+    box-shadow: #88abfd 0px 0px 10px 0px;
+    opacity: 0.7;
+}
+
+.flex-item:hover > .eventTitle {
+    color: #2c5cca;
+}
+
+.eventTitle {
+    font-size: 2rem;
+    color: #d6e9c6;
+}
+
+.eventHeader {
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+}
+
+.eventPicture {
+    /* display: flex;
+    height: 100px;
+    width: 100px;
+    margin-left: 15px; */
+    width: 110px;
+}
+
+.eventDetails {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.eventDetails h6, h3, h5 {
+    margin: 0;
+}
+
+.eventDetails h3 {
+    color: #660066;
+}
+
+.eventDetailsPara {
+    margin-top: 20px;
+}
+
+.eventDetailsPara h3 {
+    color: #660066;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+.eventDetailsPara p {
+    text-align: justify;
+}
+
+.showsTitle h3 {
+    color: #660066;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+.showsContainer {
+    width: 100%;
+    margin: auto;
+    box-shadow: #778094 0px 0px 10px 0px;
+    border-radius: 3%;
+    margin-bottom: 20px;
+}
+
+.test {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.showsItem {
+    width: 100%;
+    border-top: 1px solid #778094;
+    border-bottom: 1px solid #778094;
+    display: flex;
+    padding: 20px;
+}
+
+.showText {
+    font-size: 1.5rem;
+    color: #393f4d;
+}
+
+.showDate {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px 0 10px;
+}
+
+.dateNo {
+    font-size: 3rem;
+    color: #660066;
+}
+
+.highlightedText {
+    color: #660066;
+}
+
+.showDetails {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    -webkit-box-flex: 1;
+}
+
+#googleMap {
+    height: 50vh;
+}
+
+.carParks h3 {
+    color: #660066;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+.purchase h3 {
+    color: #660066;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+.mapContainer h3 {
+    color: #660066;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+.mapCarParkContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .showBtn { 
+    margin: 10px 10px 0 0;
+} */
+
+/* .showBtn::after 
+{ 
+    height: 100px;
+    content: ">"; 
+    text-indent: 0; 
+    display: block; 
+    line-height: initial; 
+} */
+
+.btnStandard {
+    background-color: #660066;
+    color: #d6e9c6;
+}
+
+.btnStandard:hover {
+    background-color: #d6e9c6;
+    color: #660066;
+}
+
+input[disabled] {
+    background-color: #993231;
+    color: #d6e9c6;
+}
+
+input[disabled]:hover {
+    background-color: #993231;
+    color: #d6e9c6;
+}
+
+.button {
+    background-color: #660066;
+    color: #d6e9c6;
+}
+
+.button:hover {
+    background-color: #d6e9c6;
+    color: #660066;
+}
+
 .requiredField {
     color: red;
+}
+
+.soldOut {
+    color: #993231;
 }
 
 .requiredFieldBtn {
@@ -227,13 +448,6 @@ textarea[id=message]
 	flex-basis: 100%;
 	display: flex;
 	margin: 11px 0px;
-}
-
-.form {
-    /* display: flex; */
-    /* box-sizing: border-box; */
-    /* flex-wrap: wrap; */
-    /* flex-basis: 100%; */
 }
 
 .modalForm form {
@@ -351,9 +565,6 @@ footer {
             stroke-dashoffset: 778; }
   
   .content {
-    min-height: 100%;
-    height: 100%;
-    background: white;
     position: relative;
     z-index: 0; }
     .content h1 {
@@ -371,14 +582,11 @@ footer {
         text-align: center;
         padding: 10px 15px;
         margin: 10px;
-        font-size: 18px;
-        background-color: #efefef;
-        border-radius: 3px;
+        font-size: 13px;
+        border-radius: 10px;
+        width: 43%;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         cursor: pointer; }
-        .content .buttons .button:hover {
-          color: white;
-          background: #660066; }
   
   @keyframes unfoldIn {
     0% {

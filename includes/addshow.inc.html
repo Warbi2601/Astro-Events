@@ -1,0 +1,61 @@
+<!-- Header -->
+<div class="modalToDelete">
+    <div class="modalForm">
+        <form action="cms/process/addshow.php" method="POST" id="addShowForm">
+            <div class="modal-header">
+                <span id="close" class="close">&times;</span>
+                <h2>Add Show to Event</h2>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <!-- Venue Dropdown Menu -->
+                <div class="formLabel"><label>Venue:</label></div>
+                <div class="inputBox" id="venueDropdown">
+                    <span class="requiredField">*</span>
+                    <br />
+                </div>
+
+                <div class="formLabel"><label>Date/Time:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <!-- need to add datepicker -->
+                    <!-- <div id="datetimepicker" class="input-append date">
+                        <input type="text">
+                        <span class="add-on">
+                            <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                        </span>
+                    </div> -->
+                    <input type="text" name="dp" id="dp"/>
+                    <br />
+                </div>
+
+                <div class="formLabel"><label>Ticket Price:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <input type="text" name="ticketPrice" id="ticketPrice" placeholder="£0.00" required>
+                    <br />
+                </div>
+
+                <div class="formLabel"><label>Tickets Available:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <input type="text" name="ticketsAvailable" id="ticketsAvailable" placeholder="How many tickets are on sale?" required>
+                    <br />
+                </div>
+
+                <input type="hidden" id="eventID" name="eventID" value="">
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <div class="inputBox" id="footer">
+                    <input type="submit" value="Add Event" class="btnStandard" required>
+                    <br />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

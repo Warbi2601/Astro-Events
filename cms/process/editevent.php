@@ -5,6 +5,7 @@ include("../../includes/conn.inc.php");
 include("../../includes/functions.inc.php");
 
 //variable declarations
+$sEventID = safeString($_POST['eventID']);
 $sEventName = safeString($_POST['name']);
 $sEventDetails = safeString($_POST['details']);
 $sGenre = safeString($_POST['genre']);
@@ -12,26 +13,18 @@ $sArtist = safeString($_POST['artist']);
 
 $GenreID = (int)$sGenre;
 $ArtistID = (int)$sArtist;
+$EventID = (int)$sEventID;
 
-//add event code
+//edit event code
 
-$sql = "INSERT INTO EVENTS(Name, Details, ArtistID, GenreID) VALUES(:Name, :Details, :ArtistID, :GenreID)";
+$sql = "UPDATE EVENTS SET Name = :Name, Details = :Details, ArtistID = :ArtistID, GenreID = :GenreID WHERE ID = :EventID";
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':Name', $sEventName, PDO::PARAM_STR);
 $stmt->bindParam(':Details', $sEventDetails, PDO::PARAM_STR);
 $stmt->bindParam(':ArtistID', $ArtistID, PDO::PARAM_INT);
 $stmt->bindParam(':GenreID', $GenreID, PDO::PARAM_INT);
-
-$stmt->execute();
-
-$EventID = $pdo->lastInsertId();
-
-$sql = "INSERT INTO EVENTARTIST(EventID, ArtistID) VALUES(:EventID, :ArtistID)";
-
-$stmt = $pdo->prepare($sql);
 $stmt->bindParam(':EventID', $EventID, PDO::PARAM_INT);
-$stmt->bindParam(':ArtistID', $ArtistID, PDO::PARAM_INT);
 
 $stmt->execute();
 

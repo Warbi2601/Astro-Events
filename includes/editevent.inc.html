@@ -1,0 +1,56 @@
+<!-- Header -->
+<div class="modalToDelete">
+        <div class="modalForm">
+            <form action="cms/process/editevent.php" method="POST" id="editEventForm">
+                <div class="modal-header">
+                    <span id="close" class="close">&times;</span>
+                    <h2>Edit Event</h2>
+                </div>
+    
+                <!-- Body -->
+                <div class="modal-body">
+    
+                    <div class="formLabel"><label>Event Name:</label></div>
+                    <div class="inputBox">
+                        <span class="requiredField">*</span>
+                        <input type="text" name="name" id="name" placeholder="Event Name" required>
+                        <br />
+                    </div>
+    
+                    <div class="formLabel"><label>Event Details:</label></div>
+                    <div class="inputBox">
+                        <span class="requiredField">*</span>
+                        <input type="text" name="details" id="details" placeholder="Event Details" required>
+                        <br />
+                    </div>
+    
+                    <div class="formLabel"><label>Genre:</label></div>
+    
+                    <!-- Genre Dropdown Menu -->
+                    <div class="inputBox" id="genreDropdown">
+                        <span class="requiredField">*</span>
+                        <br />
+                    </div>
+    
+                    <div class="formLabel"><label>Artist:</label></div>
+    
+                    <!-- Artist Dropdown Menu -->
+                    <div class="inputBox" id="artistDropdown">
+                        <span class="requiredField">*</span>
+                        <br />
+                    </div>
+
+                    <input type="hidden" id="eventID" name="eventID" value="">
+    
+                </div>
+    
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <div class="inputBox" id="footer">
+                        <input type="submit" value="Edit Event" class="btnStandard" required>
+                        <br />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

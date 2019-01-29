@@ -15,6 +15,11 @@ header nav ul li h1{
 	height:215px;
 }
 
+.container {
+	width: 80%;
+	margin: auto;
+}
+
 footer {
     background-image: url(../Images/SpaceHeaderDesktop.png);
 	background-repeat: no-repeat;
@@ -23,6 +28,11 @@ footer {
 
 .transparentNav {
 	background: transparent;
+}
+
+#stickyNav {
+	width: 71%;
+	transform: translateX(18%);
 }
 
 nav {
@@ -100,7 +110,6 @@ nav ul li:first-child {
 }
 
 .content {
-	display: flex;
 	box-sizing: border-box;
 }
 
@@ -151,6 +160,59 @@ nav ul li:first-child {
 	font-size: 1.3rem;
 }
 
+.flex-item {
+    flex-basis: 28%;
+}
+
+.pageContainer {
+	width: 80%;
+	margin: auto;
+}
+
+.showDate {
+	margin: 0 30px 0 30px;
+}
+
+.buttons {
+	max-width: unset;
+	margin: 0;
+}
+
+.content .buttons .button {
+	width: 19%;
+	float: right;
+}
+
+.mapCarParkContainer {
+    flex-direction: row;
+}
+
+.mapContainer {
+	flex-basis: 50%;
+}
+
+.carParks {
+	flex-basis: 50%;
+	margin-left: 20px;
+}
+
+#stickyBar {
+    background-color: #660066;
+    opacity: 0.8;
+    display: none;
+    padding: 10px 10px; /* Some padding */
+    border-radius: 10px;
+    position: fixed; /* Fixed position - sit on top of the page */
+    top: 0; 
+    width: 100%; /* Full width */
+    transition: 0.2s; /* Add a transition effect (when scrolling - and font size is decreased) */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#stickyBar a {
+    color: white;
+}
 
 
 /* Modal CSS */

@@ -8,6 +8,7 @@ require("../../includes/user.inc.php");
 //variable declarations
 $sUsername = safeString($_POST['username']);
 $sPassword = safeString($_POST['password']);
+date_default_timezone_set('Europe/London');
 $currentDate = date("Y-m-d H:i:s");
 
 $_SESSION['loginError'] = 1;

@@ -1,0 +1,31 @@
+<!-- Header -->
+<div class="modalToDelete">
+    <div class="modalForm">
+        <form action="cms/process/addartist.php" method="POST" id="addArtistForm">
+            <div class="modal-header">
+                <span id="close" class="close">&times;</span>
+                <h2>Add Artist</h2>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <div class="formLabel"><label>Artist Name:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <input type="text" name="name" id="name" placeholder="Artist Name" required>
+                    <br />
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <div class="inputBox" id="footer">
+                    <input type="submit" value="Add Artist" class="btnStandard" required>
+                    <br />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

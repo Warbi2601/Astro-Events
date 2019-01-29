@@ -5,7 +5,7 @@
 
     $user = 'root';
     $password = '';
-    $dsn = 'mysql:host=localhost;dbname=events-website';
+    $dsn = 'mysql:host=localhost;dbname=events-website-new';
     
     try
     { 

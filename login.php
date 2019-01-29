@@ -17,6 +17,7 @@ require("includes/sessions.inc.php");
 </head>
 
 <body>
+<div class="contentWrapper">
     <header>
     <div class="headBarContainer">
         <div class="headBar">
@@ -30,7 +31,7 @@ require("includes/sessions.inc.php");
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                             <ul class="dropdown-menu">
                                 <li><a href="cms/process/logoutscript.php">Logout</a></li>
-                                <li><a href="#">My Account</a></li>
+                                <li><a href="myaccount.php">My Account</a></li>
                                 <li class="divider"></li>
                                 <li><a href="admin.php">Admin</a></li>
                             </ul>
@@ -64,7 +65,7 @@ require("includes/sessions.inc.php");
                     <nav class="transparentNav">
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
-                            <li><a href="index.php" class="pageCheck">Home</a></li>
+                            <li><a href="index.php" class="slideHover">Home</a></li>
                             <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
                             <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
                             <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
@@ -72,6 +73,19 @@ require("includes/sessions.inc.php");
                     </nav>
                 </div>
             </div>
+
+            <div id="stickyBar">
+                <nav class="transparentNav" id="stickyNav">
+                        <ul>
+                            <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+                            <li><a href="index.php" class="pageCheck">Home</a></li>
+                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
+                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
+                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                        </ul>
+                </nav>
+            </div>
+
         </div>
     </header>
 
@@ -82,33 +96,33 @@ require("includes/sessions.inc.php");
                 <h1>Login</h1>
 
                     <?php
-                    if(isset($_SESSION['loginError']))
-                    {
-                        switch($_SESSION['loginError'])
-                        {   
-                            case 1 :   
-                                echo "
-                                <div class=\"alert alert-danger\">
-                                    <strong>Error!</strong> The Username or Password you entered was invalid</a>
-                                </div>";
-                                break;
-                            case 2 :   
-                                echo "
-                                <div class=\"alert alert-danger\">
-                                    <strong>Error!</strong> You need to confirm your email before you can login</a>
-                                </div>";
-                                break;
-                            case 3 :   
-                                echo "
-                                <div class=\"alert alert-danger\">
-                                    <strong>Error!</strong> You must be logged in to view that page</a>
-                                </div>";
-                                break;
-                        } 
+                        if(isset($_SESSION['loginError']))
+                        {
+                            switch($_SESSION['loginError'])
+                            {   
+                                case 1 :   
+                                    echo "
+                                    <div class=\"alert alert-danger\">
+                                        <strong>Error!</strong> The Username or Password you entered was invalid</a>
+                                    </div>";
+                                    break;
+                                case 2 :   
+                                    echo "
+                                    <div class=\"alert alert-danger\">
+                                        <strong>Error!</strong> You need to confirm your email before you can login</a>
+                                    </div>";    
+                                    break;
+                                case 3 :   
+                                    echo "
+                                    <div class=\"alert alert-danger\">
+                                        <strong>Error!</strong> You must be logged in to view that page</a>
+                                    </div>";
+                                    break;
+                            } 
 
-                        unset($_SESSION['loginError']);
-                    }
-                ?>
+                            unset($_SESSION['loginError']);
+                        }
+                    ?>
 
                 <div class="form">
                 <form action="cms/process/loginscript.php" method="POST">
@@ -140,6 +154,7 @@ require("includes/sessions.inc.php");
                 </div>
             </div>
         </div>
+    </div>
 
             <footer>
             <p class="lastUpdated">Page Last Updated: </p>

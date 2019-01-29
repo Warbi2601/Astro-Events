@@ -17,6 +17,8 @@ require("includes/sessions.inc.php");
 </head>
 
 <body>
+    <div class="contentWrapper">
+
     <header>
     <div class="headBarContainer">
         <div class="headBar">
@@ -30,7 +32,7 @@ require("includes/sessions.inc.php");
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                             <ul class="dropdown-menu">
                                 <li><a href="cms/process/logoutscript.php">Logout</a></li>
-                                <li><a href="#">My Account</a></li>
+                                <li><a href="myaccount.php">My Account</a></li>
                                 <li class="divider"></li>
                                 <li><a href="admin.php">Admin</a></li>
                             </ul>
@@ -64,7 +66,7 @@ require("includes/sessions.inc.php");
                     <nav class="transparentNav">
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
-                            <li><a href="index.php" class="pageCheck">Home</a></li>
+                            <li><a href="index.php" class="slideHover">Home</a></li>
                             <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
                             <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
                             <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
@@ -72,6 +74,19 @@ require("includes/sessions.inc.php");
                     </nav>
                 </div>
             </div>
+
+            <div id="stickyBar">
+                <nav class="transparentNav" id="stickyNav">
+                        <ul>
+                            <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+                            <li><a href="index.php" class="pageCheck">Home</a></li>
+                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
+                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
+                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                        </ul>
+                </nav>
+            </div>
+
         </div>
 </header>
 
@@ -148,6 +163,7 @@ if(isset($_SESSION['regError']))
     unset($_SESSION['regError']);
 ?>
 
+</div>
 </div>
 </div>
 

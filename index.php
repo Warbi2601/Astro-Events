@@ -19,6 +19,7 @@ require("includes/authorize.inc.php");
 </head>
 
 <body>
+<div class="contentWrapper">
     <header>
     <div class="headBarContainer">
         <div class="headBar">
@@ -33,7 +34,7 @@ require("includes/authorize.inc.php");
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                             <ul class="dropdown-menu">
                                 <li><a href="cms/process/logoutscript.php">Logout</a></li>
-                                <li><a href="#">My Account</a></li>';
+                                <li><a href="myaccount.php">My Account</a></li>';
 
                     //logic for showing the admin button to admins only
                     $User = $_SESSION['User'];
@@ -87,10 +88,26 @@ require("includes/authorize.inc.php");
                     </nav>
                 </div>
             </div>
+
+            <div id="stickyBar">
+                <nav class="transparentNav" id="stickyNav">
+                        <ul>
+                            <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+                            <li><a href="index.php" class="pageCheck">Home</a></li>
+                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
+                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
+                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                        </ul>
+                </nav>
+            </div>
+
+
         </div>
 </header>
 
-    <div>
+
+    <div class="pageContainer">
+    <div class="pageWrapper">
         <?php
             if(isset($_SESSION['login'])) {
                 
@@ -103,11 +120,11 @@ require("includes/authorize.inc.php");
                     $UserUsername = $User->getUsername();
                     $UserLastLoginDate = $User->getLastLoginDate();
 
-                    $displayDate = new DateTime($UserLastLoginDate);
+                    $dateToBeFormatted = new DateTime($UserLastLoginDate);
+                    $displayDate = $dateToBeFormatted->format('D jS M Y');
+                    $time = $dateToBeFormatted->format('H:i a');
 
-                    $displayDate = $displayDate->format('D jS M Y');
-
-                    echo "<p>Welcome Back $UserUsername! You last logged in on $displayDate</p>";
+                    echo '<p>Welcome Back ' . $UserUsername . '! You last logged in on ' . $displayDate . ' at ' . $time . ' </p>';
                 }
             }
             else {
@@ -115,31 +132,26 @@ require("includes/authorize.inc.php");
             }
 
         ?>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
 
+        <div class="flex-container">
+            <?php
+                //pull all the events from the DB
+                $sql = "SELECT * FROM EVENTS";
+                $stmt = $pdo->prepare($sql);            
+                $stmt->execute();
+
+                while($row = $stmt->fetchObject()){
+                    echo '<a class="flex-item" href="event.php?id=' . $row->ID . '"><p class="eventTitle">' . $row->Name . '</p>';
+                    if($row->Picture != null) {
+                        echo '<img src=images/' . $row->Picture . ' alt="" class="eventImg">';
+                    }
+                    echo '</a>';
+                }
+            ?>
+        </div>
     </div>
-
-
+    </div>
+</div>
 
     <footer>
         <p class="lastUpdated">Page Last Updated: </p>

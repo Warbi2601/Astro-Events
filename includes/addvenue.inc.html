@@ -1,0 +1,45 @@
+<!-- Header -->
+<div class="modalToDelete">
+    <div class="modalForm">
+        <form action="cms/process/addvenue.php" method="POST" id="addVenueForm">
+            <div class="modal-header">
+                <span id="close" class="close">&times;</span>
+                <h2>Add Venue</h2>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <div class="formLabel"><label>Venue Name:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <input type="text" name="name" id="name" placeholder="e.g Etihad Stadium" required>
+                    <br />
+                </div>
+
+                <div class="formLabel"><label>Venue Location:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <input type="text" name="location" id="location" placeholder="e.g Manchester" required>
+                    <br />
+                </div>
+
+                <div class="formLabel"><label>Venue Description:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <input type="text" name="description" id="description" placeholder="Enter a Description" required>
+                    <br />
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <div class="inputBox" id="footer">
+                    <input type="submit" value="Add Venue" class="btnStandard" required>
+                    <br />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

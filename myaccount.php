@@ -12,21 +12,19 @@ require("includes/authorize.inc.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Astro Events</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/mobile.css" />
     <link rel="stylesheet" media="only screen and (min-width : 600px)" href="css/desktop.css">
 </head>
 
 <body>
-    <div class="contentWrapper">
+<div class="contentWrapper">
     <header>
     <div class="headBarContainer">
         <div class="headBar">
 
-        <div class="flexItem1">
+            <div class="flexItem1">
             <?php
             //logic for populating the "My Account" dropdown depending on whether the user is logged in or not
                 if(isset($_SESSION['login'])){
@@ -49,10 +47,6 @@ require("includes/authorize.inc.php");
                                 <li><a href="admin.php">Admin</a></li>
                         ';
                     }
-                    else {
-                        header('Location: index.php');
-                        exit;
-                    }
                     
                     echo '
                             </ul>
@@ -71,6 +65,7 @@ require("includes/authorize.inc.php");
                             </ul>
                         </div>
                         ';
+                  header("Location: Login.php");
                 }
             ?>
             </div>
@@ -109,56 +104,67 @@ require("includes/authorize.inc.php");
 
         </div>
 </header>
+
 <div class="pageContainer">
 <div class="pageWrapper">
 
-<?php
-    if(isset($_SESSION['Success'])) {
-        echo '
-        <div class="alert alert-success">
-        <strong>Success! - </strong>' . $_SESSION['Success'] . '</a>
-        </div>';
-        
-        unset($_SESSION['Success']);
+    <div class="showsTitle">
+        <h3>My Purchases</h3>
+    </div>
 
-    } else if(isset($_SESSION['Error'])) {
-        echo '
-        <div class="alert alert-danger">
-        <strong>Error! - </strong>' . $_SESSION['Error'] . '</a>
-        </div>';
-        
-        unset($_SESSION['Error']);
-    }
-    ?>
+    <div id="showsForm">
+        <div class="showsContainer">
+            <?php
 
-        <div class="whiteBackground">
-            <div class="text">
-        
-                <h1>Admin</h1>
-                <div id="modal-container">
-                    <div class="modal-background">
-                        <div class="modal" id="modal">
-                            <div id="ModalContent"></div>
+                $User = $_SESSION['User'];
+                $userID = (int)$User->getID();
+                $sql = "SELECT p.Cost as Cost, p.NumberOfTickets as NumberofTickets, p.Cost as Cost, s.DateTime as DateTime, 
+                        s.TicketsAvailable as TicketsAvailable, v.ID as VenueID, v.Name as VenueName, v.Location as VenueLocation, e.Name as EventName
+                        FROM PURCHASES as p
+                        INNER JOIN `SHOW` as s
+                        ON p.ShowID = s.ID
+                        INNER JOIN Events as e
+                        ON s.EventID = e.ID
+                        INNER JOIN VENUE as v
+                        ON s.VenueID = v.ID
+                        WHERE p.UserID = :UserID";
 
-                            <!-- Content created here dynamically using jQuery -->
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindParam(':UserID', $userID, PDO::PARAM_INT);
+                    
+                    $stmt->execute();
 
-                        </div>
-                    </div>
-                </div>
-                <div class="content">
-                    <div class="buttons">
-                        <div id="addEvent" class="button btnStandard">Add Event</div>
-                        <div id="addArtist" class="button btnStandard">Add Artist</div>
-                        <div id="addGenre" class="button btnStandard">Add Genre</div>
-                        <div id="addVenue" class="button btnStandard">Add Venue</div>
-                    </div>
-                </div>
-            </div>
+                    $row = $stmt->fetchObject();
+
+                while($row = $stmt->fetchObject()){
+                    $formattedDate = date_create_from_format('Y-m-d H:i:s', $row->DateTime);
+                    $showDateTimestamp = $formattedDate->getTimestamp();
+                    $day = date('d', $showDateTimestamp);
+                    $month = date('M', $showDateTimestamp);
+                    $year = date('Y', $showDateTimestamp);
+                    
+                    echo '
+                            <div class="showsItem">
+                                <div class="showDate">
+                                    <span class="showText dateNo">' . $day . '</span>
+                                    <span class="showText">' . $month . '</span>
+                                    <span class="showText">' . $year . '</span>
+                                </div>
+                                
+                                <div class="showDetails">
+                                    <span class="showText highlightedText"><strong>' . $row->EventName . '</strong></span>
+                                    <span class="showText highlightedText"><a href="venue.php?venueID=' . $row->VenueID . '"><strong>' . $row->VenueName . ', ' . $row->VenueLocation . '</strong></a></span>
+                                    <span class="showText">Tickets Bought: ' . $row->NumberofTickets . '</strong></span>
+                                    <span class="showText">Cost: £' . $row->Cost . '</span>
+                                </div>
+                            </div>
+                        ';
+            }
+            ?>
         </div>
     </div>
 </div>
 </div>
-
     <footer>
         <p class="lastUpdated">Page Last Updated: </p>
         <p>Copyright &copy; Josh Warburton 2018</p>
@@ -171,10 +177,7 @@ require("includes/authorize.inc.php");
 
     <script src="JS/jquery-3.2.1.min.js"></script>
     <script src="JS/jquery.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-timepicker-addon@1.6.3/dist/jquery-ui-timepicker-addon.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

@@ -1,0 +1,44 @@
+<!-- Header -->
+<div class="modalToDelete">
+    <div class="modalForm">
+        <form action="cms/process/buyTickets.php" method="POST" id="buyTicketsForm">
+            <div class="modal-header">
+                <span id="close" class="close">&times;</span>
+                <h2>Buy Tickets</h2>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <div class="formLabel"><label id="lblNumOfTickets">There are tickets left for this show</label></div>
+                <br />
+
+                <div class="formLabel"><label>Number of Tickets:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <select class="form-control" name="numOfTickets" id="numOfTickets" required="">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <br />
+                </div>
+
+                <input type="hidden" id="showID" name="showID" value="">
+                <input type="hidden" id="numofTicketsLeft" name="numofTicketsLeft" value="">
+                <input type="hidden" id="ticketPrice" name="ticketPrice" value="">
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <div class="inputBox" id="footer">
+                    <input type="submit" value="Buy Tickets!" class="btnStandard" required>
+                    <br />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
