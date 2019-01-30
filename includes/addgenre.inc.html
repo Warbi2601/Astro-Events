@@ -1,31 +1,31 @@
 <!-- Header -->
 <div class="modalToDelete">
-        <div class="modalForm">
-            <form action="cms/process/addgenre.php" method="POST" id="addGenreForm">
-                <div class="modal-header">
-                    <span id="close" class="close">&times;</span>
-                    <h2>Add Genre</h2>
+    <div class="modalForm">
+        <form action="cms/process/addgenre.php" method="POST" id="addGenreForm">
+            <div class="modal-header">
+                <span id="close" class="close">&times;</span>
+                <h2>Add Genre</h2>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+
+                <div class="formLabel"><label>Genre Name:</label></div>
+                <div class="inputBox">
+                    <span class="requiredField">*</span>
+                    <input type="text" name="name" id="name" placeholder="Genre Name" required>
+                    <br />
                 </div>
-    
-                <!-- Body -->
-                <div class="modal-body">
-    
-                    <div class="formLabel"><label>Genre Name:</label></div>
-                    <div class="inputBox">
-                        <span class="requiredField">*</span>
-                        <input type="text" name="name" id="name" placeholder="Genre Name" required>
-                        <br />
-                    </div>
-    
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <div class="inputBox" id="footer">
+                    <input type="submit" value="Add Genre" class="btnStandard" required>
+                    <br />
                 </div>
-    
-                <!-- Footer -->
-                <div class="modal-footer">
-                    <div class="inputBox" id="footer">
-                        <input type="submit" value="Add Genre" class="btnStandard" required>
-                        <br />
-                    </div>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+</div>

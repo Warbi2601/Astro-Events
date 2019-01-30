@@ -95,10 +95,10 @@ require("includes/authorize.inc.php");
                         <nav class="transparentNav" id="stickyNav">
                             <ul>
                                 <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
-                                <li><a href="index.php" class="pageCheck">Home</a></li>
-                                <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
-                                <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
-                                <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                                <li><a href="index.php" class="stickySlideHover">Home</a></li>
+                                <li><a href="Qualifications.html" class="stickySlideHover">Events List</a></li>
+                                <li><a href="WorkExperience.html" class="stickySlideHover">Artists</a></li>
+                                <li><a href="Recommendations.html" class="stickySlideHover">Admin</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -110,21 +110,22 @@ require("includes/authorize.inc.php");
 
             <?php
 
-      if(isset($_SESSION['showID'])) {
-        $LastInsertID = $_SESSION['showID'];
+      if(isset($_SESSION['purchaseID'])) {
+        $LastInsertID = $_SESSION['purchaseID'];
+        $showID = $_SESSION['showID'];
+        unset($_SESSION['purchaseID']);        
         unset($_SESSION['showID']);
-              $sql = "SELECT p.Cost as Cost, p.NumberOfTickets as NumberofTickets, s.DateTime as DateTime, 
-              s.TicketsAvailable as TicketsAvailable, v.Name as VenueName, v.Location as VenueLocation, e.Name as EventName
+              $sql = "SELECT p.Cost as Cost, p.NumberOfTickets as NumberofTickets, p.DateTime as DateTime, 
+              s.TicketsAvailable as TicketsAvailable, v.Name as VenueName, v.Location as VenueLocation, p.EventName as EventName
               FROM PURCHASES as p
               INNER JOIN `SHOW` as s
-              ON p.ShowID = s.ID
-              INNER JOIN Events as e
-              ON s.EventID = e.ID
+              ON :ShowID = s.ID
               INNER JOIN VENUE as v
               ON s.VenueID = v.ID
               WHERE p.ID = :LastInsertID";
 
         $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':ShowID', $showID, PDO::PARAM_INT);
         $stmt->bindParam(':LastInsertID', $LastInsertID, PDO::PARAM_INT);
         
         $stmt->execute();
@@ -135,7 +136,7 @@ require("includes/authorize.inc.php");
         $displayDate = $dateToBeFormatted->format('D jS M Y');
         $time = $dateToBeFormatted->format('H:i a');
 
-        $message = 'Congratulations, you now have ' . $row->NumberofTickets . ' tickets to go and see ' . $row->EventName . ' at ' . $row->VenueName . ", " . $row->VenueLocation . ' on ' . $displayDate . ' at ' . $time . '. You have been charged £' . $row->Cost . '.
+        $message = 'Congratulations, you now have ' . $row->NumberofTickets . ' ticket(s) to go and see ' . $row->EventName . ' at ' . $row->VenueName . ", " . $row->VenueLocation . ' on ' . $displayDate . ' at ' . $time . '. You have been charged £' . $row->Cost . '.
           There are now ' . $row->TicketsAvailable . ' tickets left for the event.';
 
         if($row->TicketsAvailable < 100) {

@@ -238,6 +238,12 @@ span.burgerMenu {
     margin: 0;
 }
 
+h3 {
+    color: #660066;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
 .eventDetails h3 {
     color: #660066;
 }
@@ -246,20 +252,8 @@ span.burgerMenu {
     margin-top: 20px;
 }
 
-.eventDetailsPara h3 {
-    color: #660066;
-    text-align: center;
-    margin: 20px 0 20px 0;
-}
-
 .eventDetailsPara p {
     text-align: justify;
-}
-
-.showsTitle h3 {
-    color: #660066;
-    text-align: center;
-    margin: 20px 0 20px 0;
 }
 
 .showsContainer {
@@ -316,45 +310,15 @@ span.burgerMenu {
     height: 50vh;
 }
 
-.carParks h3 {
-    color: #660066;
-    text-align: center;
-    margin: 20px 0 20px 0;
-}
-
-.purchase h3 {
-    color: #660066;
-    text-align: center;
-    margin: 20px 0 20px 0;
-}
-
-.mapContainer h3 {
-    color: #660066;
-    text-align: center;
-    margin: 20px 0 20px 0;
-}
-
 .mapCarParkContainer {
     display: flex;
     flex-direction: column;
 }
 
-/* .showBtn { 
-    margin: 10px 10px 0 0;
-} */
-
-/* .showBtn::after 
-{ 
-    height: 100px;
-    content: ">"; 
-    text-indent: 0; 
-    display: block; 
-    line-height: initial; 
-} */
-
 .btnStandard {
     background-color: #660066;
     color: #d6e9c6;
+    border-radius: 10px;
 }
 
 .btnStandard:hover {
@@ -390,6 +354,29 @@ input[disabled]:hover {
     color: #993231;
 }
 
+#searchFiltersTab {
+    margin: auto;
+    margin-top: 20px;
+    width: calc(100% - 40px);
+}
+
+#searchFilters {
+    margin: auto;
+    width: calc(100% - 40px);
+}
+
+#searchFilters label {
+    display: none;
+}
+
+.filter {
+    margin: 20px 0;
+}
+
+#dots {
+    margin-bottom: 20px;
+}
+
 .requiredFieldBtn {
     color: #fcfcfc;
 }
@@ -414,6 +401,10 @@ input[disabled]:hover {
     text-align-last: center;
 }
 
+.indexHeader p {
+    margin-bottom: 20px;
+}
+
 .text h1 {
     text-align: center;
 }
@@ -426,7 +417,6 @@ input, textarea  {
     box-sizing: border-box;
     flex-basis: 100%;
     max-width: 100%;
-    margin: 5px;
     padding: 10px;
     border-radius: 10px;
     font-family: 'Century Gothic', Helvetica, Arial, sans-serif;
@@ -459,15 +449,30 @@ textarea[id=message]
 }
 
 footer {
+    background-image: url(../Images/SpaceHeaderMobile.png);
+    background-repeat: no-repeat;
     border-top: solid 1px #660066;
     text-align: center;
     box-shadow: #660066 0px 0px 10px 0px;
     background-color: #111111;
     color: white;
+    padding: 20px;
 }
 
+.carParkName {
+    font-weight: bold;
+}
 
+/* Slideshow CSS */
 
+#featuredEventsCarousel {
+    width: calc(100% - 40px);
+    margin: auto;
+}
+
+.slideshowImg {
+    margin: auto;
+}
 
 /* Modal CSS */
 

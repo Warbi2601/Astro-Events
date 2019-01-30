@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 include("../../includes/sessions.inc.php");
 include("../../includes/conn.inc.php");
 
-$sql = "SELECT * FROM venue";
+$sql = "SELECT * FROM venue ORDER BY Name ASC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

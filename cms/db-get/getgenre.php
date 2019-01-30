@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 include("../../includes/sessions.inc.php");
 include("../../includes/conn.inc.php");
 
-$sql = "SELECT * FROM Genre";
+$sql = "SELECT * FROM Genre ORDER BY Name ASC";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute();

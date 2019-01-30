@@ -116,10 +116,10 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <nav class="transparentNav" id="stickyNav">
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
-                            <li><a href="index.php" class="pageCheck">Home</a></li>
-                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                            <li><a href="index.php" class="stickySlideHover">Home</a></li>
+                            <li><a href="Qualifications.html" class="stickySlideHover">Events List</a></li>
+                            <li><a href="WorkExperience.html" class="stickySlideHover">Artists</a></li>
+                            <li><a href="Recommendations.html" class="stickySlideHover">Admin</a></li>
                         </ul>
                 </nav>
             </div>
@@ -192,7 +192,8 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ON s.VenueID = v.ID
             INNER JOIN events as e
             ON s.EventID = e.ID
-            WHERE e.ID = " . $EventID;
+            WHERE e.ID = :EventID
+            ORDER BY s.DateTime ASC;";
 
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':EventID', $EventID, PDO::PARAM_INT);

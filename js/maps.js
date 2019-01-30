@@ -50,8 +50,8 @@ $(document).ready(function() {
 function callback(results, status, venueLatLng) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
         var counter = results.length;
-        if(results.length > 10) {
-            counter = 10; 
+        if(results.length > 5) {
+            counter = 5; 
         }
         var listOfCarParks = new Array();
       for (var i = 0; i < counter; i++) {
@@ -104,7 +104,7 @@ function CarPark(name, loc, address, milesAway){
         var address = document.createElement("span");
         name.innerHTML = carPark.name;
         address.innerHTML = carPark.address;
-        name.className = "showText highlightedText";
+        name.className = "showText highlightedText carParkName";
         address.className = "showText";
         detailsDiv.append(name, address);
 

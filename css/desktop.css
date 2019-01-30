@@ -23,7 +23,6 @@ header nav ul li h1{
 footer {
     background-image: url(../Images/SpaceHeaderDesktop.png);
 	background-repeat: no-repeat;
-	height:130px;
 }
 
 .transparentNav {
@@ -81,6 +80,21 @@ nav ul li {
 }
 
 .slideHover:hover::after {
+	width: 100%;
+}
+
+.stickySlideHover::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 3px;
+    background: white;
+	transition: width .5s;
+	position: relative;
+	bottom: -4px;
+}
+
+.stickySlideHover:hover::after {
 	width: 100%;
 }
 
@@ -196,9 +210,14 @@ nav ul li:first-child {
 	margin-left: 20px;
 }
 
+#googleMap {
+    height: 75vh;
+}
+
 #stickyBar {
-    background-color: #660066;
-    opacity: 0.8;
+	background-image: url(../Images/SpaceHeaderDesktop.png);
+	background-repeat: no-repeat;
+	z-index: 1;
     display: none;
     padding: 10px 10px; /* Some padding */
     border-radius: 10px;
@@ -214,6 +233,9 @@ nav ul li:first-child {
     color: white;
 }
 
+#searchFilters label {
+    display: block;
+}
 
 /* Modal CSS */
 

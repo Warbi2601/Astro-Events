@@ -1,5 +1,4 @@
 $(window).on('resize', function(ev){
-	//console.info(window.innerWidth);
 	if(window.innerWidth > 600){
 		$('nav ul').attr('style','');
 	};
@@ -8,7 +7,6 @@ $(window).on('resize', function(ev){
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
 function openNav() {
 	$("#mySidenav").css({"box-shadow": "250px 0px 150px 300px rgba(0, 0, 0, 1)", "width": "50%"});
-	//document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 
 /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
@@ -22,38 +20,6 @@ function closeNav() {
 $(document).ready(function() {
 	$('.lastUpdated').text("Page Last Updated: " + new Date(document.lastModified).toLocaleDateString("en-GB"));
 });
-
-
-
-//Modal JS
-
-
-// // Get the button that opens the modal
-// var btn = document.getElementById("myBtn");
-
-// // Get the <span> element that closes the modal
-// var span = document.getElementsByClassName("close")[0];
-
-// // When the user clicks on the button, open the modal
-// btn.onclick = function() {
-//     modal.style.display = "block";
-// }
-
-// // When the user clicks on <span> (x), close the modal
-// span.onclick = function() {
-//     modal.style.display = "none";
-// }
-
-// // When the user clicks anywhere outside of the modal, close it
-// window.onclick = function(event) {
-//     if (event.target == modal) {
-//         modal.style.display = "none";
-//     }
-// }
-
-
-
-
 
 function childOf( node, ancestor ) {
     var child = node;
@@ -151,6 +117,27 @@ function addToDropDownList(array, parent, htmla, id) {
 	$(parent).append(htmla);
 }
 
+function getOptionsForDropdown(array, parent, id) {
+	var htmla = "";
+	htmla += "<option value=\"\">Choose your " + id + "</option>";
+	$.each(array, function(key, value) {
+		switch(id)
+		{
+			case 'genre' :
+				htmla += "<option value=\"" + value.genreID + "\">" + value.genreName + "</option>";
+				break;
+			case 'artist' :
+				htmla += "<option value=\"" + value.artistID + "\">" + value.artistName + "</option>";
+				break;
+			case 'venue' :
+				htmla += "<option value=\"" + value.venueID + "\">" + value.venueName + ", " + value.venueLocation + "</option>";
+				break;
+		}
+	});
+
+	$(parent).append(htmla);
+}
+
 function getDropdownData(url, parent, id) {
 	$.get(url, function(myData) {
 		var arr = $.map(myData, function(el) { return el; })
@@ -163,6 +150,13 @@ function getPopulatedDropdownData(url, parent, id, selectedID) {
 		var arr = $.map(myData, function(el) { return el; });
 		addToDropDownList(arr, parent, '<select class="form-control" name="' + id + '" id="' + id + '" required>', id);
 		$("#" + id).val(selectedID);
+	});
+}
+
+function getDropdownDataWithModelBinding(url, parent, id) {
+	$.get(url, function(myData) {
+		var arr = $.map(myData, function(el) { return el; })
+		getOptionsForDropdown(arr, parent, id)
 	});
 }
 
@@ -227,7 +221,6 @@ $('#addEvent').on('click', function(ev) {
 		type: "POST",
 		url: "/events-website/includes/addevent.inc.html",
 		success: function(data) {
-			debugger;
 			$('#ModalContent').html(data);
 			getDropdownData('cms/db-get/getgenre.php', "#genreDropdown", "genre");
 			getDropdownData('cms/db-get/getartist.php', "#artistDropdown", "artist");
@@ -291,9 +284,23 @@ $('#addShow').on('click', function(ev) {
 	});
 });
 
-
-
-
+$('#deleteEvent').on('click', function(ev) {
+	ev.preventDefault();
+	var eventID = $(this).attr('eventID');
+	$.ajax({
+		type: "POST",
+		url: "/events-website/includes/deleteevent.inc.html",
+		success: function(data) {
+			$('#ModalContent').html(data);
+			$('#eventID').val(eventID);
+			addCloseClickEvent();
+			showModal();
+		},
+		error: function() {
+			alert("Modal data failed to load");
+		}
+	});
+});
 
 //functionality for showing the sticky navbar
 window.onscroll = function() {scrollFunction()};
@@ -317,3 +324,8 @@ function addDynamicModalStyling() {
 	var availableheight = (step1 - footerheight);
 	$('.modal-body').css({"height" : availableheight, "overflow" : "auto"});
 }
+
+$('#searchFilters').ready(function() {
+	getDropdownDataWithModelBinding('cms/db-get/getgenre.php', "#genre", "genre");
+	getDropdownDataWithModelBinding('cms/db-get/getartist.php', "#artist", "artist");
+});

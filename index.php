@@ -94,9 +94,9 @@ require("includes/authorize.inc.php");
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                             <li><a href="index.php" class="pageCheck">Home</a></li>
-                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                            <li><a href="Qualifications.html" class="stickySlideHover">Events List</a></li>
+                            <li><a href="WorkExperience.html" class="stickySlideHover">Artists</a></li>
+                            <li><a href="Recommendations.html" class="stickySlideHover">Admin</a></li>
                         </ul>
                 </nav>
             </div>
@@ -105,53 +105,172 @@ require("includes/authorize.inc.php");
         </div>
 </header>
 
-
+<main id="app">
     <div class="pageContainer">
     <div class="pageWrapper">
+        <div class="indexHeader">
         <?php
-            if(isset($_SESSION['login'])) {
+            if(isset($_SESSION['login'])) { 
                 
-                echo "<p>successful login!</p>";
-
+                echo "<h3>You are logged in!</h3>";
+                
                 if(isset($_SESSION['User'])) {
-
+                    
                     //logic for showing the welcome message with the users username and date last logged in
                     $User = $_SESSION['User'];
                     $UserUsername = $User->getUsername();
                     $UserLastLoginDate = $User->getLastLoginDate();
-
+                    
                     $dateToBeFormatted = new DateTime($UserLastLoginDate);
                     $displayDate = $dateToBeFormatted->format('D jS M Y');
                     $time = $dateToBeFormatted->format('H:i a');
-
+                    
                     echo '<p>Welcome Back ' . $UserUsername . '! You last logged in on ' . $displayDate . ' at ' . $time . ' </p>';
                 }
             }
             else {
                 header("Location: Login.php");
             }
-
         ?>
+        </div>
+        
+        <h3>Featured Events</h3>
 
-        <div class="flex-container">
-            <?php
-                //pull all the events from the DB
-                $sql = "SELECT * FROM EVENTS";
-                $stmt = $pdo->prepare($sql);            
+
+        <?php
+                //get 6 random events
+                $sql = "SELECT ID, Name
+                FROM EVENTS
+                ORDER BY RAND()
+                LIMIT 6;";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':EventID', $EventID, PDO::PARAM_INT);
                 $stmt->execute();
 
-                while($row = $stmt->fetchObject()){
-                    echo '<a class="flex-item" href="event.php?id=' . $row->ID . '"><p class="eventTitle">' . $row->Name . '</p>';
-                    if($row->Picture != null) {
-                        echo '<img src=images/' . $row->Picture . ' alt="" class="eventImg">';
-                    }
-                    echo '</a>';
-                }
+                // $numOfEvents = $stmt->rowCount();
+                // $counter = 1;
+
+                // while($row = $stmt->fetchObject()){
+                //     echo '
+                //         <div class="mySlides fade">
+                //             <a href="event.php?id=' . $row->ID . '"><img src="images/EltonJohn.png" style="width:100%"></a>
+                //             <div class="slideshowText">' . $row->Name . '</div>
+                //         </div>
+                //     ';
+                //     // $counter++;
+                // }
             ?>
-        </div>
+
+<!-- <div class="carousel-item">
+  <img src="..." alt="...">
+
+</div> -->
+
+
+
+
+<div id="featuredEventsCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#featuredEventsCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#featuredEventsCarousel" data-slide-to="1"></li>
+    <li data-target="#featuredEventsCarousel" data-slide-to="2"></li>
+    <li data-target="#featuredEventsCarousel" data-slide-to="3"></li>
+    <li data-target="#featuredEventsCarousel" data-slide-to="4"></li>
+    <li data-target="#featuredEventsCarousel" data-slide-to="5"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+
+<?php 
+    $active = " active";
+    
+    while($row = $stmt->fetchObject()){
+            echo '
+            <div class="item' . $active . '">
+                <a href="event.php?id=' .  $row->ID . '">
+                    <img class="slideshowImg" src="images/EltonJohn.png" alt="' . $row->Name . '">
+                </a>
+            </div>
+            ';
+            $active = "";
+    }
+?>
+
+
+    <!-- <div class="item">
+      <img class="slideshowImg" src="images/EltonJohn.png" alt="Chicago">
+    </div>
+
+    <div class="item">
+      <img class="slideshowImg" src="images/EltonJohn.png" alt="New York">
+    </div> -->
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#featuredEventsCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#featuredEventsCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<button data-toggle="collapse" data-target="#searchFilters" class="btnStandard form-control" id="searchFiltersTab">Search Filters</button>
+
+<div id="searchFilters" class="collapse in">
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="col-md-4">
+        <div class="formLabel"><label>Search:</label></div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="formLabel"><label>Artist:</label></div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="formLabel"><label>Genre:</label></div>
+    </div>
+
+
+    <div class="col-md-4 col-sm-12 filter">
+        <input type="search" v-model="searchString" class="form-control" placeholder="Search for an event">
+    </div>
+
+    <!-- Artist Dropdown Menu -->
+    <div class="col-md-4 col-sm-12 filter" id="artistDropdown">
+        <select class="form-control" name="artist" id="artist" v-on:change="searchEvents" v-model="artist">
+            <!-- Dropdown inserted here by js -->
+        </select>
+    </div>
+
+    <!-- Genre Dropdown Menu -->
+    <div class="col-md-4 col-sm-12 filter" id="genreDropdown">
+        <select class="form-control" name="genre" id="genre" v-on:change="searchEvents" v-model="genre">
+            <!-- Dropdown inserted here by js -->
+        </select>
     </div>
     </div>
 </div>
+</div>
+
+    <div class="flex-container">
+            <a v-for="event in events" class="flex-item" v-bind:href="'event.php?id=' + event.eventID">
+                <p class="eventTitle">{{event.eventName}}</p>
+                <img src="images/EltonJohn.png" alt="" class="eventImg">
+                <!-- <img v-bind:src="'images/' + event.eventPicture" alt="" class="eventImg"> -->
+            </a>
+    </div>
+
+    </div>
+    </div>
+</div>
+</main>
 
     <footer>
         <p class="lastUpdated">Page Last Updated: </p>
@@ -166,6 +285,58 @@ require("includes/authorize.inc.php");
     <script src="JS/jquery-3.2.1.min.js"></script>
     <script src="JS/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="js/vue.min.js"></script>
+    <script>
+
+        var vm = new Vue({     
+            el: '#app',     
+            data: {        
+                events: [],     
+                searchString : "",
+                genre : "",
+                artist : ""
+            },
+            watch: {
+                searchString: function() {
+                    
+                    //Applys filters
+                    var varsToSend = {};
+                    if(vm.searchString != "") varsToSend["searchString"] = vm.searchString;
+                    if(vm.artist != "") varsToSend["searchArtist"] = vm.artist;
+                    if(vm.genre != "") varsToSend["searchGenre"] = vm.genre;
+
+                    $.post('cms/db-get/searchEvents.php', varsToSend, function(data) {
+                        vm.events = data;    
+
+                    }, 'json');
+                },
+            }, 
+            methods: {  
+                searchEvents : function () {
+                    
+                    //Applys filters
+                    var varsToSend = {};
+                    if(vm.searchString != "") varsToSend["searchString"] = vm.searchString;
+                    if(vm.artist != "") varsToSend["searchArtist"] = vm.artist;
+                    if(vm.genre != "") varsToSend["searchGenre"] = vm.genre;
+
+                    $.post('cms/db-get/searchEvents.php', varsToSend, function(data) {
+                        vm.events = data;    
+
+                    }, 'json');
+                    // $.getJSON('cms/db-get/searchEvents.php', varToSend, function(data){
+                    //     vm.events = data;    
+                    // });       
+                }  
+            }
+        });
+
+        $(document).ready(function() {
+            vm.searchEvents();
+        });
+
+    </script>
 </body>
 
 </html>

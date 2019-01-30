@@ -94,10 +94,10 @@ require("includes/authorize.inc.php");
                 <nav class="transparentNav" id="stickyNav">
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
-                            <li><a href="index.php" class="pageCheck">Home</a></li>
-                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                            <li><a href="index.php" class="stickySlideHover">Home</a></li>
+                            <li><a href="Qualifications.html" class="stickySlideHover">Events List</a></li>
+                            <li><a href="WorkExperience.html" class="stickySlideHover">Artists</a></li>
+                            <li><a href="Recommendations.html" class="stickySlideHover">Admin</a></li>
                         </ul>
                 </nav>
             </div>
@@ -106,65 +106,71 @@ require("includes/authorize.inc.php");
 </header>
 
 <div class="pageContainer">
-<div class="pageWrapper">
+    <div class="pageWrapper">
 
-    <div class="showsTitle">
-        <h3>My Purchases</h3>
-    </div>
+        <div class="showsTitle">
+            <h3>My Purchases</h3>
+        </div>
 
-    <div id="showsForm">
-        <div class="showsContainer">
-            <?php
+        <div id="showsForm">
+            <div class="showsContainer">
+                <?php
 
-                $User = $_SESSION['User'];
-                $userID = (int)$User->getID();
-                $sql = "SELECT p.Cost as Cost, p.NumberOfTickets as NumberofTickets, p.Cost as Cost, s.DateTime as DateTime, 
-                        s.TicketsAvailable as TicketsAvailable, v.ID as VenueID, v.Name as VenueName, v.Location as VenueLocation, e.Name as EventName
-                        FROM PURCHASES as p
-                        INNER JOIN `SHOW` as s
-                        ON p.ShowID = s.ID
-                        INNER JOIN Events as e
-                        ON s.EventID = e.ID
-                        INNER JOIN VENUE as v
-                        ON s.VenueID = v.ID
-                        WHERE p.UserID = :UserID";
+                    $User = $_SESSION['User'];
+                    $userID = (int)$User->getID();
+                    $sql = "SELECT p.Cost as Cost, p.NumberOfTickets as NumberofTickets, p.DateTime as DateTime, 
+                            v.ID as VenueID, v.Name as VenueName, v.Location as VenueLocation, p.EventName as EventName
+                            FROM PURCHASES as p
+                            INNER JOIN VENUE as v
+                            ON p.VenueID = v.ID
+                            WHERE p.UserID = :UserID
+                            ORDER BY p.DateTime ASC";
 
                     $stmt = $pdo->prepare($sql);
                     $stmt->bindParam(':UserID', $userID, PDO::PARAM_INT);
                     
                     $stmt->execute();
 
-                    $row = $stmt->fetchObject();
+                    if($stmt->rowCount() > 0) {
 
-                while($row = $stmt->fetchObject()){
-                    $formattedDate = date_create_from_format('Y-m-d H:i:s', $row->DateTime);
-                    $showDateTimestamp = $formattedDate->getTimestamp();
-                    $day = date('d', $showDateTimestamp);
-                    $month = date('M', $showDateTimestamp);
-                    $year = date('Y', $showDateTimestamp);
-                    
-                    echo '
-                            <div class="showsItem">
-                                <div class="showDate">
-                                    <span class="showText dateNo">' . $day . '</span>
-                                    <span class="showText">' . $month . '</span>
-                                    <span class="showText">' . $year . '</span>
-                                </div>
-                                
-                                <div class="showDetails">
-                                    <span class="showText highlightedText"><strong>' . $row->EventName . '</strong></span>
-                                    <span class="showText highlightedText"><a href="venue.php?venueID=' . $row->VenueID . '"><strong>' . $row->VenueName . ', ' . $row->VenueLocation . '</strong></a></span>
-                                    <span class="showText">Tickets Bought: ' . $row->NumberofTickets . '</strong></span>
-                                    <span class="showText">Cost: £' . $row->Cost . '</span>
-                                </div>
-                            </div>
+                        while($row = $stmt->fetchObject()){
+                            $formattedDate = date_create_from_format('Y-m-d H:i:s', $row->DateTime);
+                            $showDateTimestamp = $formattedDate->getTimestamp();
+                            $day = date('d', $showDateTimestamp);
+                            $month = date('M', $showDateTimestamp);
+                            $year = date('Y', $showDateTimestamp);
+                            
+                            echo '
+                                    <div class="showsItem">
+                                        <div class="showDate">
+                                            <span class="showText dateNo">' . $day . '</span>
+                                            <span class="showText">' . $month . '</span>
+                                            <span class="showText">' . $year . '</span>
+                                        </div>
+                                        
+                                        <div class="showDetails">
+                                            <span class="showText highlightedText"><strong>' . $row->EventName . '</strong></span>
+                                            <span class="showText highlightedText"><a href="venue.php?venueID=' . $row->VenueID . '"><strong>' . $row->VenueName . ', ' . $row->VenueLocation . '</strong></a></span>
+                                            <span class="showText">Tickets Bought: ' . $row->NumberofTickets . '</strong></span>
+                                            <span class="showText">Cost: £' . $row->Cost . '</span>
+                                        </div>
+                                    </div>
+                                ';
+                        }
+                    }
+                    else {
+                        echo '
+                        <div class="purchase">
+                        <p>You haven\'t made any purchases yet! Head over to the Events page to buy tickets!</p>
+                        </div>
                         ';
-            }
-            ?>
+                    }
+                ?>
+            </div>
         </div>
     </div>
 </div>
-</div>
+            </div>
     <footer>
         <p class="lastUpdated">Page Last Updated: </p>
         <p>Copyright &copy; Josh Warburton 2018</p>

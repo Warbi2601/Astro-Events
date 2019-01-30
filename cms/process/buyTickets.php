@@ -51,17 +51,41 @@ $stmt->bindParam(':TicketsAvailable', $ticketsLeft, PDO::PARAM_INT);
 $stmt->bindParam(':ID', $showID, PDO::PARAM_INT);
 $stmt->execute();
 
+////////////////////
+
+$sql = "SELECT s.DateTime as DateTime, s.VenueID as VenueID, e.Name as EventName
+FROM `SHOW` as s
+INNER JOIN Events as e
+ON s.EventID = e.ID
+WHERE s.ID = :ID";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':ID', $showID, PDO::PARAM_INT);
+$stmt->execute();
+
+$row = $stmt->fetchObject();
+
+
+//Save variables to be put in the purchases table
+$pDateTime = $row->DateTime;
+$pVenueID = $row->VenueID;
+$pEventName = $row->EventName;
+
+////////////////////////
+
 //Update purchases table
-$sql = "INSERT INTO PURCHASES(ShowID, UserID, Cost, NumberOfTickets) VALUES(:ShowID, :UserID, :Cost, :NumberOfTickets)";
+$sql = "INSERT INTO PURCHASES(UserID, VenueID, EventName, DateTime, Cost, NumberOfTickets) VALUES(:UserID, :VenueID, :EventName, :DateTime, :Cost, :NumberOfTickets)";
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindParam(':ShowID', $showID, PDO::PARAM_INT);
 $stmt->bindParam(':UserID', $userID, PDO::PARAM_INT);
+$stmt->bindParam(':VenueID', $pVenueID, PDO::PARAM_INT);
+$stmt->bindParam(':EventName', $pEventName, PDO::PARAM_STR);
+$stmt->bindParam(':DateTime', $pDateTime, PDO::PARAM_STR);
 $stmt->bindParam(':Cost', $costOfPurchase, PDO::PARAM_STR);
 $stmt->bindParam(':NumberOfTickets', $numOfTicketsToBuy, PDO::PARAM_INT);
 $stmt->execute();
 
-$_SESSION['showID'] = $pdo->lastInsertId();
+$_SESSION['purchaseID'] = $pdo->lastInsertId();
+$_SESSION['showID'] = $showID;
 
 header("Location: ../../purchase.php");
 
