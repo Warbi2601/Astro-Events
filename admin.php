@@ -87,9 +87,12 @@ require("includes/authorize.inc.php");
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                             <li><a href="index.php" class="slideHover">Home</a></li>
-                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                            <?php
+                                if($UserAdmin == 1)
+                                {
+                                    echo '<li><a href="admin.php" class="pageCheck">Admin</a></li>';
+                                }
+                            ?>
                         </ul>
                     </nav>
                 </div>
@@ -100,9 +103,12 @@ require("includes/authorize.inc.php");
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                             <li><a href="index.php" class="stickySlideHover">Home</a></li>
-                            <li><a href="Qualifications.html" class="stickySlideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="stickySlideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="stickySlideHover">Admin</a></li>
+                            <?php
+                                if($UserAdmin == 1)
+                                {
+                                    echo '<li><a href="admin.php" class="pageCheck">Admin</a></li>';
+                                }
+                            ?>
                         </ul>
                 </nav>
             </div>
@@ -131,28 +137,24 @@ require("includes/authorize.inc.php");
     }
     ?>
 
-        <div class="whiteBackground">
-            <div class="text">
         
-                <h1>Admin</h1>
-                <div id="modal-container">
-                    <div class="modal-background">
-                        <div class="modal" id="modal">
-                            <div id="ModalContent"></div>
+        <h3>Admin</h3>
+        <div id="modal-container">
+            <div class="modal-background">
+                <div class="modal" id="modal">
+                    <div id="ModalContent"></div>
 
-                            <!-- Content created here dynamically using jQuery -->
+                    <!-- Content created here dynamically using jQuery -->
 
-                        </div>
-                    </div>
                 </div>
-                <div class="content">
-                    <div class="buttons">
-                        <div id="addEvent" class="button btnStandard">Add Event</div>
-                        <div id="addArtist" class="button btnStandard">Add Artist</div>
-                        <div id="addGenre" class="button btnStandard">Add Genre</div>
-                        <div id="addVenue" class="button btnStandard">Add Venue</div>
-                    </div>
-                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="buttons">
+                <div id="addEvent" class="button btnStandard">Add Event</div>
+                <div id="addArtist" class="button btnStandard">Add Artist</div>
+                <div id="addGenre" class="button btnStandard">Add Genre</div>
+                <div id="addVenue" class="button btnStandard">Add Venue</div>
             </div>
         </div>
     </div>

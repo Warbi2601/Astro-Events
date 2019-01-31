@@ -8,6 +8,7 @@
     $sName = safeString($_POST['name']);
     $sLocation = safeString($_POST['location']);
     $sDescription = safeString($_POST['description']);
+    $sPicture = safeString($_POST['picture']);
 
 
     //validation for if there is already a genre with the exact same name
@@ -28,12 +29,13 @@
 
 
     //add artist code
-    $sql = "INSERT INTO VENUE(Name, Location, Description) VALUES(:Name, :Location, :Description)";
+    $sql = "INSERT INTO VENUE(Name, Location, Description, Picture) VALUES(:Name, :Location, :Description, :Picture)";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':Name', $sName, PDO::PARAM_STR);
     $stmt->bindParam(':Location', $sLocation, PDO::PARAM_STR);
     $stmt->bindParam(':Description', $sDescription, PDO::PARAM_STR);
+    $stmt->bindParam(':Picture', $sPicture, PDO::PARAM_STR);
     $stmt->execute();
 
     $_SESSION['Success'] = $sName . ' successfully added';

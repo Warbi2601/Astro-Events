@@ -36,10 +36,8 @@
     $sSearchGenre = "%".$sSearchGenre."%";
     $sSearchString = "%".$sSearchString."%";
 
-    $sql = "SELECT e.ID as ID, e.Name as Name, i.Data as Data
+    $sql = "SELECT e.ID as ID, e.Name as Name, e.Picture as Picture
     FROM EVENTS as e
-    INNER JOIN images as i
-    ON i.ID = e.ImageID
     INNER JOIN Artist as a
     ON a.ID = e.ArtistID
     INNER JOIN Genre as g
@@ -54,7 +52,7 @@
 
     $returnAr = array();
     while($row = $stmt->fetchObject()){
-        array_push($returnAr, array("eventID" => $row->ID, "eventName" => $row->Name, "eventPicture" => base64_encode($row->Data)));
+        array_push($returnAr, array("eventID" => $row->ID, "eventName" => $row->Name, "eventPicture" => $row->Picture));
     }
     echo json_encode($returnAr);
 ?>

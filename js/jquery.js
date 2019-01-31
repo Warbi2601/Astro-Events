@@ -245,6 +245,7 @@ $('#editEvent').on('click', function(ev) {
 			var details = data.Details;
 			artistID = data.ArtistID;
 			genreID = data.GenreID;
+			pictureName = data.Picture;
 
 			$.post('/events-website/includes/editevent.inc.html', function (data) {
 				$('#ModalContent').html(data);
@@ -253,6 +254,7 @@ $('#editEvent').on('click', function(ev) {
 				$('#name').val(name);
 				$('#details').val(details);
 				$('#eventID').val(eventID);
+				$('#picture').val(pictureName);
 				addCloseClickEvent();
 				showModal();
 		});

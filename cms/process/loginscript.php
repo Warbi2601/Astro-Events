@@ -27,12 +27,12 @@ if($stmt->rowcount() != 0)
     $row = $stmt->fetchObject();
     if(password_verify($sPassword, $row->PasswordHash))
     {
-        if($row->EmailValidated == false)
-        {
-            $_SESSION['loginError'] = 2;
-        }
-        else 
-        {
+        // if($row->EmailValidated == false)
+        // {
+        //     $_SESSION['loginError'] = 2;
+        // }
+        // else 
+        // {
 
             //Logs in and creates user object (before the Last Login Date is updated)
             $User = new User($row->ID, $pdo);
@@ -51,7 +51,7 @@ if($stmt->rowcount() != 0)
             $_SESSION['login'] = true;
             
             $referer = "index.php";
-        }
+        // }
     }
 }
 

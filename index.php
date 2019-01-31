@@ -81,9 +81,12 @@ require("includes/authorize.inc.php");
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                             <li><a href="index.php" class="pageCheck">Home</a></li>
-                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                            <?php
+                                if($UserAdmin == 1)
+                                {
+                                    echo '<li><a href="admin.php" class="slideHover">Admin</a></li>';
+                                }
+                            ?>
                         </ul>
                     </nav>
                 </div>
@@ -94,9 +97,12 @@ require("includes/authorize.inc.php");
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                             <li><a href="index.php" class="pageCheck">Home</a></li>
-                            <li><a href="Qualifications.html" class="stickySlideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="stickySlideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="stickySlideHover">Admin</a></li>
+                            <?php
+                                if($UserAdmin == 1)
+                                {
+                                    echo '<li><a href="admin.php" class="stickySlideHover">Admin</a></li>';
+                                }
+                            ?>
                         </ul>
                 </nav>
             </div>
@@ -138,37 +144,16 @@ require("includes/authorize.inc.php");
 
 
         <?php
-                //get 6 random events
-                $sql = "SELECT ID, Name
-                FROM EVENTS
-                ORDER BY RAND()
-                LIMIT 6;";
+            //get 6 random events
+            $sql = "SELECT ID, Name, Picture
+            FROM EVENTS
+            ORDER BY RAND()
+            LIMIT 6;";
 
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':EventID', $EventID, PDO::PARAM_INT);
-                $stmt->execute();
-
-                // $numOfEvents = $stmt->rowCount();
-                // $counter = 1;
-
-                // while($row = $stmt->fetchObject()){
-                //     echo '
-                //         <div class="mySlides fade">
-                //             <a href="event.php?id=' . $row->ID . '"><img src="images/EltonJohn.png" style="width:100%"></a>
-                //             <div class="slideshowText">' . $row->Name . '</div>
-                //         </div>
-                //     ';
-                //     // $counter++;
-                // }
-            ?>
-
-<!-- <div class="carousel-item">
-  <img src="..." alt="...">
-
-</div> -->
-
-
-
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':EventID', $EventID, PDO::PARAM_INT);
+            $stmt->execute();
+        ?>
 
 <div id="featuredEventsCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
@@ -191,22 +176,16 @@ require("includes/authorize.inc.php");
             echo '
             <div class="item' . $active . '">
                 <a href="event.php?id=' .  $row->ID . '">
-                    <img class="slideshowImg" src="images/EltonJohn.png" alt="' . $row->Name . '">
+                    <img class="slideshowImg" src="images/' . $row->Picture . '" alt="' . $row->Name . '">
+                    <div id="carousel-caption" class="carousel-caption">
+                    <h4>' . $row->Name . '</h4>
                 </a>
+              </div>
             </div>
             ';
             $active = "";
     }
 ?>
-
-
-    <!-- <div class="item">
-      <img class="slideshowImg" src="images/EltonJohn.png" alt="Chicago">
-    </div>
-
-    <div class="item">
-      <img class="slideshowImg" src="images/EltonJohn.png" alt="New York">
-    </div> -->
   </div>
 
   <!-- Left and right controls -->
@@ -262,8 +241,8 @@ require("includes/authorize.inc.php");
     <div class="flex-container">
             <a v-for="event in events" class="flex-item" v-bind:href="'event.php?id=' + event.eventID">
                 <p class="eventTitle">{{event.eventName}}</p>
-                <img src="images/EltonJohn.png" alt="" class="eventImg">
-                <!-- <img v-bind:src="'images/' + event.eventPicture" alt="" class="eventImg"> -->
+                <!-- <img src="images/EltonJohn.png" alt="" class="eventImg"> -->
+                <img v-bind:src="'images/' + event.eventPicture" alt="event.eventName" class="eventImg">
             </a>
     </div>
 
@@ -324,10 +303,7 @@ require("includes/authorize.inc.php");
                     $.post('cms/db-get/searchEvents.php', varsToSend, function(data) {
                         vm.events = data;    
 
-                    }, 'json');
-                    // $.getJSON('cms/db-get/searchEvents.php', varToSend, function(data){
-                    //     vm.events = data;    
-                    // });       
+                    }, 'json');  
                 }  
             }
         });

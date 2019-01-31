@@ -20,7 +20,8 @@ $eventArray = array(
     "Name" => $row->Name, 
     "Details" => $row->Details, 
     "ArtistID" => $row->ArtistID, 
-    "GenreID" => $row->GenreID
+    "GenreID" => $row->GenreID,
+    "Picture" => $row->Picture
 );
 
 echo json_encode($eventArray, true);

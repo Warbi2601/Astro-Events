@@ -104,9 +104,12 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                             <li><a href="index.php" class="slideHover">Home</a></li>
-                            <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                            <?php
+                                if($UserAdmin == 1)
+                                {
+                                    echo '<li><a href="admin.php" class="slideHover">Admin</a></li>';
+                                }
+                            ?>
                         </ul>
                     </nav>
                 </div>
@@ -117,9 +120,12 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <ul>
                             <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                             <li><a href="index.php" class="stickySlideHover">Home</a></li>
-                            <li><a href="Qualifications.html" class="stickySlideHover">Events List</a></li>
-                            <li><a href="WorkExperience.html" class="stickySlideHover">Artists</a></li>
-                            <li><a href="Recommendations.html" class="stickySlideHover">Admin</a></li>
+                            <?php
+                                if($UserAdmin == 1)
+                                {
+                                    echo '<li><a href="admin.php" class="stickySlideHover">Admin</a></li>';
+                                }
+                            ?>
                         </ul>
                 </nav>
             </div>
@@ -152,19 +158,6 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 unset($_SESSION['Error']);
             }
-
-        //Doesn't display the CMS buttons if the user isn't an admin
-            if($UserAdmin == 1)
-            {
-                echo '
-                    <div class="content">
-                        <div class="buttons">
-                            <div id="editEvent" class="button" eventID="' . $EventID . '">Edit Event</div>
-                            <div id="addShow" class="button" eventID="' . $EventID . '">Add Show to Event</div>
-                        </div>
-                    </div>
-                ';
-            }
         ?>
 
 
@@ -173,10 +166,25 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <img src="images/<?php echo $row[0]['EventPicture'];?>" alt="" class="eventImg">
             </div>
             <div class="eventDetails">
-                <h3><?php echo $row[0]['EventName'];?></h3>
+                <h3 class="title"><?php echo $row[0]['EventName'];?></h3>
                 <h5><?php echo $row[0]['ArtistName'];?></h5>
                 <h5><?php echo $row[0]['GenreName'];?></h5>
             </div>
+            <?php
+                //Doesn't display the CMS buttons if the user isn't an admin
+                if($UserAdmin == 1)
+                {
+                    echo '
+                        <div class="content">
+                            <div class="buttons">
+                                <div id="editEvent" class="button" eventID="' . $EventID . '">Edit Event</div>
+                                <div id="addShow" class="button" eventID="' . $EventID . '">Add Show to Event</div>
+                                <div id="deleteEvent" class="button" eventID="' . $EventID . '">Delete Event</div>
+                            </div>
+                        </div>
+                    ';
+                }
+            ?>
         </div>
 
         <div class="eventDetailsPara">

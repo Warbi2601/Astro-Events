@@ -83,9 +83,12 @@ require("includes/authorize.inc.php");
                                 <ul>
                                     <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                                     <li><a href="index.php" class="slideHover">Home</a></li>
-                                    <li><a href="Qualifications.html" class="slideHover">Events List</a></li>
-                                    <li><a href="WorkExperience.html" class="slideHover">Artists</a></li>
-                                    <li><a href="Recommendations.html" class="slideHover">Admin</a></li>
+                                    <?php
+                                        if($UserAdmin == 1)
+                                        {
+                                            echo '<li><a href="admin.php" class="slideHover">Admin</a></li>';
+                                        }
+                                    ?>
                                 </ul>
                             </nav>
                         </div>
@@ -96,9 +99,12 @@ require("includes/authorize.inc.php");
                             <ul>
                                 <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
                                 <li><a href="index.php" class="stickySlideHover">Home</a></li>
-                                <li><a href="Qualifications.html" class="stickySlideHover">Events List</a></li>
-                                <li><a href="WorkExperience.html" class="stickySlideHover">Artists</a></li>
-                                <li><a href="Recommendations.html" class="stickySlideHover">Admin</a></li>
+                                <?php
+                                        if($UserAdmin == 1)
+                                        {
+                                            echo '<li><a href="admin.php" class="stickySlideHover">Admin</a></li>';
+                                        }
+                                    ?>
                             </ul>
                         </nav>
                     </div>
@@ -126,7 +132,7 @@ require("includes/authorize.inc.php");
                     </div>
                 </div>
                 <div class="eventDetails">
-                    <h3 id="venueName">
+                    <h3 id="venueName" class="title">
                         <?php echo $row->Name;?>
                     </h3>
                     <h5 id="venueLocation">

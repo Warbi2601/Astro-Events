@@ -94,24 +94,25 @@
 
 
 <?php
-    if(isset($_POST['btn'])) {
-        $name = $_FILES['myfile']['name'];
-        $type = $_FILES['myfile']['type'];
-        $data = file_get_contents($_FILES['myfile']['tmp_name']);
+    // if(isset($_POST['btn'])) {
+    //     $name = $_FILES['myfile']['name'];
+    //     $type = $_FILES['myfile']['type'];
+    //     $data = base64_encode(file_get_contents($_FILES['myfile']['tmp_name']));
 
-        $sql = "INSERT INTO images(Name, Mime, Data) VALUES(:Name, :Mime, :Data)";
+    //     $sql = "INSERT INTO images(Name, Mime, Data) VALUES(:Name, :Mime, :Data)";
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':Name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':Mime', $type, PDO::PARAM_STR);
-        $stmt->bindParam(':Data', $data, PDO::PARAM_STR);
-        $stmt->execute();
-    }
+    //     $stmt = $pdo->prepare($sql);
+    //     $stmt->bindParam(':Name', $name, PDO::PARAM_STR);
+    //     $stmt->bindParam(':Mime', $type, PDO::PARAM_STR);
+    //     $stmt->bindParam(':Data', $data, PDO::PARAM_STR);
+    //     $stmt->execute();
+    // }
 
 ?>
+     <!-- <img src='cms/process/viewimage.php?id=17' alt=''> -->
 
 <?php
-    // $sql = "SELECT * FROM images where ID = 5";
+    // $sql = "SELECT * FROM images where ID = 15";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
@@ -126,7 +127,6 @@
 
     // echo "<img src='data:" . $row->Mime . ";base64," . base64_decode($row->Data) . "' alt='' class='eventImg'>";
     // }
-    // <img src='cms/process/viewimage.php?id=1' alt='' class='eventImg'>
     
     
     // while($row = $stmt->fetchObject()){
@@ -137,12 +137,12 @@
     // }
 ?>
 
-<img src="cms/process/viewimage.php?id=2" />
+<!-- <img src="cms/process/viewimage.php?id=2" /> -->
 
-<form method="POST" enctype="multipart/form-data">
-    <input type="file" name="myfile">
-    <button name="btn">Upload</button>
-</form>
+<!-- <form method="POST" enctype="multipart/form-data"> -->
+    <!-- <input type="file" name="myfile" id="event-image"> -->
+    <!-- <button name="btn" >Upload</button> -->
+<!-- </form> -->
 
 
 </div>
@@ -156,6 +156,30 @@
                 <a href="https://github.com/Warbi2601"><img src="Images/GitHub.png" alt="" width="40" height="40"></a>
         </div> -->
     </footer>
+
+    <script>
+        // var image;
+
+        // var input = document.getElementById('event-image');
+        // input.addEventListener('change', convertImage);
+
+        // function convertImage() {
+        //     var file = input.files[0];
+        //     if(file) {
+        //         const reader = new FileReader();
+
+        //         reader.onload = () => {
+        //             image = reader.result;
+        //             debugger;
+        //             $.post('cms/process/addimage.php', { image: image },
+        //             function (data) {
+        //                 console.dir(data);
+        //             });
+        //         }
+        //         reader.readAsDataURL(file);
+        //     }
+        // }
+    </script>
 
     <script src="JS/jquery-3.2.1.min.js"></script>
     <script src="JS/jquery.js"></script>

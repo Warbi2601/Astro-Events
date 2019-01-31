@@ -9,17 +9,19 @@ $sEventName = safeString($_POST['name']);
 $sEventDetails = safeString($_POST['details']);
 $sGenre = safeString($_POST['genre']);
 $sArtist = safeString($_POST['artist']);
+$sPicture = safeString($_POST['picture']);
 
 $GenreID = (int)$sGenre;
 $ArtistID = (int)$sArtist;
 
 //add event code
 
-$sql = "INSERT INTO EVENTS(Name, Details, ArtistID, GenreID) VALUES(:Name, :Details, :ArtistID, :GenreID)";
+$sql = "INSERT INTO EVENTS(Name, Details, Picture, ArtistID, GenreID) VALUES(:Name, :Details, :Picture, :ArtistID, :GenreID)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':Name', $sEventName, PDO::PARAM_STR);
 $stmt->bindParam(':Details', $sEventDetails, PDO::PARAM_STR);
+$stmt->bindParam(':Picture', $sPicture, PDO::PARAM_STR);
 $stmt->bindParam(':ArtistID', $ArtistID, PDO::PARAM_INT);
 $stmt->bindParam(':GenreID', $GenreID, PDO::PARAM_INT);
 
